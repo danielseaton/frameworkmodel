@@ -92,12 +92,8 @@ Photoperiod = sunset(end) - sunrise(end);
 
 Tb = p(1); %Base temperature for thermal-time calculation
 TT0 = p(19); %degree days required from seed germination until plant emergence (stage 1.0 in Boyes et al. 2001)
-PL=p(20); %leaf expansion
-aL=p(21);
-bL=p(22);
-PR=p(23); %root expansion
-aR=p(24);
-bR=p(25);
+
+
 TS = p(26); %degree days of leaf lifespan (from the point of leaf initiation)
 TLcot = p(27); %cotyledon expansion period
 TLtrue = p(28); %expansion period of true leaves
@@ -134,16 +130,25 @@ clear sugar_perFW
 
 
 
+%%%This is parameterisation - parameters derived from other parameters but
+%%%not depending on conditions
 %Expansion period for the root system
 %____________________________________
+
+PR=p(23); %root expansion
+aR=p(24);
+bR=p(25);
 
 TR = 1000;%Root_LC*CumThrm(end);
 MaxfRpoint = TR/(1+(bR-1)/(aR-1))-0.5; %determining the maximum point by solving the function derivative
 MaxfR = ((MaxfRpoint+0.5)/TR)^(aR-1)*(1-(MaxfRpoint+0.5)/TR)^(bR-1);  
 
-
 %Maximum values of leaf sink variation
 %_____________________________________
+
+PL=p(20); %leaf expansion
+aL=p(21);
+bL=p(22);
 
 Maxfcotpoint = TLcot/(1+(bL-1)/(aL-1))-0.5; %determining the maximum point by solving the function derivative
 Maxfcot = ((Maxfcotpoint+0.5)/TLcot)^(aL-1)*(1-(Maxfcotpoint+0.5)/TLcot)^(bL-1);
@@ -152,10 +157,10 @@ MaxfLpoint = TLtrue/(1+(bL-1)/(aL-1))-0.5; %determining the maximum point by sol
 MaxfL = ((MaxfLpoint+0.5)/TLtrue)^(aL-1)*(1-(MaxfLpoint+0.5)/TLtrue)^(bL-1);  
           
 
- 
 
 
 
+%%%This should be a separate function
 %initialise clock to starting conditions
 clock_state_0=[1.0151 0.956 0.0755 0.0041 0.506 0.0977 0.0238 0.0731 0.0697 0.0196 0.0435 0.2505 0.0709 0.1017 0.0658 0.4016 0.1167 0.1012 0.207 0.0788 0.3102 0.0553 0.2991 0.1503 0.0286 0.65 0.2566 0.1012 0.576 0.3269]; %12:12 wt;
 for i = 1:5
@@ -234,6 +239,8 @@ while day_idx <= N_max_days && ~(has_flowered)
                 S(eme) = sum(Si(eme,1:2));
                 S_intercept(eme) = S(eme)*cos(10/180*pi); 
                 Func_area(eme)=S(eme);
+                %%%This could give the impression that another timestep can
+                %%%be chosen
                 steps_perhour = 1;
                 steps_perday = 24*steps_perhour;
                 timestep = 1/steps_perday; % Time step length used to solve the model
@@ -290,7 +297,7 @@ while day_idx <= N_max_days && ~(has_flowered)
             [Max_area,i_max] = max(Si(t-1,:));
             i_max = max(i_max,2);
 
-            %DS note - change loop or remove mult by indicator variable fS(i)
+            %%%DS note - change loop or remove mult by indicator variable fS(i)
             for i=1:Leaf_no(t-1) %for each leaf rank i
 
                 if      i<=i_max
