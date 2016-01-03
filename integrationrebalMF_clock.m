@@ -217,6 +217,7 @@ while day_idx <= N_max_days && ~(has_flowered)
                 has_emerged = 1;
                 %For the first growth cycle (from germination to TT0):
                 %____________________________________________________
+                %%%FUNC: initialise seedling state at emergence
 
                 Seed_mass = seed_input; %Seed dry mass (g), emptied after the first cycle to reach stage 1.0
                 Q(eme) = Seed_mass;
@@ -269,6 +270,7 @@ while day_idx <= N_max_days && ~(has_flowered)
                                                       S_intercept(eme),Leaf_carbon(eme),...
                                                       Root_carbon(eme),Sucrose_carbon(eme),...
                                                       Starch_carbon(eme),MF_carbon(eme),timestep,growth_capacity(eme));
+                %%%END FUNC: initialise seedling state at emergence
 
                 GC = 1; %number of growth cycle elapsed                                  
                 GCstart(GC+1) = eme; %The timepoint when the second growth cycle starts
@@ -314,7 +316,7 @@ while day_idx <= N_max_days && ~(has_flowered)
 
 
             %Rosette area (at the previous time point):      
-
+            %FUNC: calculate area a previous time point
             if  Leaf_no(t-1) <= 15
 
                 S_intercept(t-1) = sum(S(t-1,1:Leaf_no(t-1))); %Projected rosette area
@@ -330,6 +332,7 @@ while day_idx <= N_max_days && ~(has_flowered)
 
             Func_area(t-1)=sum(Sf(t-1,1:Leaf_no(t-1))); 
             Destructive_projected_area(t-1) = sum(S(t-1,1:Leaf_no(t-1)));
+            %END FUNC:  calculate area a previous time point
 
 
             %To determine whole-plant carbon balance (at the current time point):
@@ -343,6 +346,7 @@ while day_idx <= N_max_days && ~(has_flowered)
             end
 
             %To determine current leaf number:
+            %FUNC: determine current leaf number
             if  (CumThrm(t) - CumThrm(GCstart(end))) >= phyllochron % A growth cycle has been reached
 
                 GC = GC+1;
@@ -359,8 +363,9 @@ while day_idx <= N_max_days && ~(has_flowered)
             else
                 Leaf_no(t) = Leaf_no(t-1);        
             end          
+            %END FUNC: determine current leaf number
 
-
+            %FUNC: root shoot partitioning
             %To calculate sink variation for leaf:
             for i = 1:Leaf_no(t)
 
@@ -417,6 +422,8 @@ while day_idx <= N_max_days && ~(has_flowered)
             num   = fR(t)*PR*rootconversion;
             denom = sum(fL(t,:))*PL*leafconversion;
             rsratio(t) = num/denom;
+            
+            %END FUNC: root shoot partitioning
 
             % To determine light status:                
             %islight = determine_light_status(t,hour,sunrise,sunset)
@@ -453,7 +460,7 @@ while day_idx <= N_max_days && ~(has_flowered)
 
 
             %To determine the amount of sugar accumulated over a day
-            %[efficiency,growth_capacity]=determine_sugar_acc(t,eme,efficiency,growth_capacity,is_light)
+            %%FUNC: [efficiency,growth_capacity]=determine_sugar_acc(t,eme,efficiency,growth_capacity,is_light)
             if t < eme + 24 + 1  % time*24
                 efficiency(t) = 0.88;%eff(t);
                 growth_capacity(t) = p(63);
@@ -469,6 +476,7 @@ while day_idx <= N_max_days && ~(has_flowered)
                     efficiency(t) = efficiency(t-1);
                 end
             end    
+            %END FUNC: determine_sugar_acc
 
             %DANIEL: added new_clock_state output and clock_state input
             [rlc_pt1(t),rrc_pt1(t),leaf_res(t),root_res(t),...
