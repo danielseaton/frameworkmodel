@@ -160,6 +160,8 @@ MaxfL = ((MaxfLpoint+0.5)/TLtrue)^(aL-1)*(1-(MaxfLpoint+0.5)/TLtrue)^(bL-1);
 fL = [];
 fR = [];
 rsratio = [];
+efficiency = [];
+growth_capacity = [];
 
 
 
@@ -336,22 +338,8 @@ while day_idx <= N_max_days && ~(has_flowered)
 
             %To determine current leaf number:
             %FUNC: determine current leaf number
-            if  (CumThrm(t) - CumThrm(GCstart(end))) >= phyllochron % A growth cycle has been reached
-
-                GC = GC+1;
-                GCstart(GC+1) = t; % the timepoint when a new growth cycle starts
-
-                Leaf_no(t) = Leaf_no(t-1) + binornd(1,probability); % A new leaf may/may not be initiated
-
-                if Leaf_no(t) ~= Leaf_no(t-1) % A new leaf is initiated
-                   Appear(Leaf_no(t)) = t;
-                   Leaf_mass(t-1,Leaf_no(t))=0;
-                   Si(t-1,Leaf_no(t))=0;
-                end              
-
-            else
-                Leaf_no(t) = Leaf_no(t-1);        
-            end          
+            [Appear,Leaf_mass,Si,Leaf_no,GC,GCstart] = determine_current_leaf_number(...
+                t,probability,CumThrm,phyllochron,Appear,Leaf_mass,Si,Leaf_no,GC,GCstart);
             %END FUNC: determine current leaf number
 
             %FUNC: root shoot partitioning
@@ -406,23 +394,10 @@ while day_idx <= N_max_days && ~(has_flowered)
 
 
             %To determine the amount of sugar accumulated over a day
-            %%FUNC: [efficiency,growth_capacity]=determine_sugar_acc(t,eme,efficiency,growth_capacity,is_light)
-            if t < eme + 24 + 1  % time*24
-                efficiency(t) = 0.88;%eff(t);
-                growth_capacity(t) = p(63);
-            else
-
-                growth_capacity(t) = p(63);
-
-
-                if is_light(t) == 1 && is_light(t-1) == 0
-
-                    efficiency(t) = 0.88;
-                else
-                    efficiency(t) = efficiency(t-1);
-                end
-            end    
-            %END FUNC: determine_sugar_acc
+            %%FUNC: [efficiency,growth_capacity]=calculate_sugar_acc(t,eme,efficiency,growth_capacity,is_light)
+            [efficiency,growth_capacity]=calculate_sugar_acc(t,p,eme,...
+                efficiency,growth_capacity,is_light);
+            %END FUNC: calculate_sugar_acc
 
             %DANIEL: added new_clock_state output and clock_state input
             [rlc_pt1(t),rrc_pt1(t),leaf_res(t),root_res(t),...
