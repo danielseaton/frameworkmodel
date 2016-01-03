@@ -1,4 +1,4 @@
-function [S_intercept,Func_area,Destructive_projected_area] = calculate_area(t,S,petiole,input_size,Appear,Leaf_no,Sf)
+function [S_intercept,Func_area] = calculate_area(t,S,petiole,input_size,Appear,Leaf_no,Sf,S_intercept,Func_area)
 
 %FUNC: calculate area a previous time point
 if  Leaf_no(t-1) <= 15
@@ -14,5 +14,4 @@ end
 
 %Total functioning area (at the previous time point):
 
-Func_area(t-1)=sum(Sf(t-1,1:Leaf_no(t-1))); 
-Destructive_projected_area(t-1) = sum(S(t-1,1:Leaf_no(t-1)));
+Func_area(t-1)=sum(Sf(t-1,1:Leaf_no(t-1)));
