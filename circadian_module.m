@@ -1,4 +1,4 @@
-function [clock_output] = circadian_module(sunrise,sunset,clock_state_0,clock_parameters)
+function [clock_output] = circadian_module(sunrise,sunset,clock_state_0,P)
 
 Tout = [0:0.05:27];
 % Run model for 27 hours:

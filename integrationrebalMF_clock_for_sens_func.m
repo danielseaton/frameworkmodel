@@ -161,7 +161,7 @@ growth_capacity = [];
 %initialise clock to starting conditions
 clock_state_0=[1.0151 0.956 0.0755 0.0041 0.506 0.0977 0.0238 0.0731 0.0697 0.0196 0.0435 0.2505 0.0709 0.1017 0.0658 0.4016 0.1167 0.1012 0.207 0.0788 0.3102 0.0553 0.2991 0.1503 0.0286 0.65 0.2566 0.1012 0.576 0.3269]; %12:12 wt;
 for i = 1:5
-    clock_output=circadian_module(sunrise(1),sunset(1),clock_state_0,clock_genotype);
+    clock_output=circadian_module(sunrise(1),sunset(1),clock_state_0,clock_parameters);
     %work out the clock state at ZT24 i.e. at the end of the previous day
     clock_state_0 = interp1q(clock_output.T,clock_output.Y,24);
 end
@@ -551,6 +551,8 @@ gFW_22 = FW(22*24);
 gFW_28 = FW(28*24);
 gFW_29 = FW(29*24);
 gFW_38 = FW(38*24);
+starchC6_ED_28 = starchC6(28.5*24);
+starchC6_EN_28 = starchC6(29*24);
 AperFW = Gas_exchange_perFW(38*24+1)/12*10^6; %micromol CO2/g FW/h
 RperFW = Gas_exchange_perFW(38*24-1)/12*10^6; %micromol CO2/g FW/h
 Aperarea = NPP(38*24+1)/S_intercept(38*24)/12*10^6/10000; %micromol CO2/cm2/h
@@ -600,4 +602,4 @@ Rperarea = NPP(38*24-1)/S_intercept(38*24-2)/12*10^6/10000; %micromol CO2/cm2/h
 
 end
 
-output = [gFW_38,AperFW,RperFW];
+output = [gFW_38,AperFW,RperFW,starchC6_ED_28,starchC6_EN_28];

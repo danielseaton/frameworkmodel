@@ -194,7 +194,7 @@ while day_idx <= N_max_days && ~(has_flowered)
     t = (day_idx-1)*24+1;
     
     %run clock model for this day
-    clock_output=circadian_module(sunrise(t),sunset(t),clock_state_0,clock_genotype);
+    clock_output=circadian_module(sunrise(t),sunset(t),clock_state_0,clock_parameters);
     %work out the clock state at ZT24 i.e. at the end of the previous day
     clock_state_0 = interp1q(clock_output.T,clock_output.Y,24);
     
