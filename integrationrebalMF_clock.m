@@ -1,10 +1,10 @@
 % function [cvRMSE] = integrationrebalMF_clock(temp,rise,set,co2,light)
 %[cvRMSE]=integrationrebalMF_clock(20.5,0,12,42,145)
 
-
 clock_genotype = {''};
 % clock_genotype = {'prr9','prr7'};
 
+clock_parameters = P2011_parameter_call(clock_genotype);
 
 temp = 20.5;
 rise = 0;
@@ -169,7 +169,7 @@ growth_capacity = [];
 %initialise clock to starting conditions
 clock_state_0=[1.0151 0.956 0.0755 0.0041 0.506 0.0977 0.0238 0.0731 0.0697 0.0196 0.0435 0.2505 0.0709 0.1017 0.0658 0.4016 0.1167 0.1012 0.207 0.0788 0.3102 0.0553 0.2991 0.1503 0.0286 0.65 0.2566 0.1012 0.576 0.3269]; %12:12 wt;
 for i = 1:5
-    clock_output=circadian_module(sunrise(1),sunset(1),clock_state_0,clock_genotype);
+    clock_output=circadian_module(sunrise(1),sunset(1),clock_state_0,clock_parameters);
     %work out the clock state at ZT24 i.e. at the end of the previous day
     clock_state_0 = interp1q(clock_output.T,clock_output.Y,24);
 end
