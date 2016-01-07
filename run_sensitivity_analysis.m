@@ -19,14 +19,15 @@ nP = length(p);
 
 clock_genotype = {''};
 % clock_genotype = {'prr9','prr7'};
-clock_parameters = P2011_parameter_call(clock_genotype);
-
+clock_parameters0 = P2011_parameter_call(clock_genotype);
+clock_parameters = clock_parameters0;
+nCP = length(clock_parameters);
 
 output_basal = integrationrebalMF_clock_for_sens_func(temp,rise,set,co2,light,clock_parameters);
 
 nD = length(output_basal); %number of dimensions of output
 
-sens = zeros(nP,nD);
+sens = zeros(nP+nCP,nD);
 errors = [];
 for i = 1:nP
     i
@@ -40,5 +41,18 @@ for i = 1:nP
     end
 end
 
-save('sens_analysis_results','output_basal','temp','rise','set','co2','light','p','deltaP','errors')
+p = p0;
+for i = nP+1:nP+nCP
+    i
+    clock_parameters = clock_parameters0;
+    clock_parameters(i-nP) = clock_parameters(i-nP)*(1+deltaP);
+    try
+        output = integrationrebalMF_clock_for_sens_func(temp,rise,set,co2,light,clock_parameters);
+        sens(i,:) = ((output-output_basal)/deltaP)./output;
+    catch
+        errors = [errors;i];
+    end
+end
+
+save('sens_analysis_results_WT','output_basal','temp','rise','set','co2','light','p0','clock_parameters0','clock_genotype','deltaP','errors')
 
