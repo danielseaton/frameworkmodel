@@ -17,8 +17,7 @@ deltaP = 0.01;
 nP = length(p);
 % nP = 2;
 
-clock_genotype = {''};
-% clock_genotype = {'prr9','prr7'};
+clock_genotype = {'prr9','prr7'};
 clock_parameters0 = P2011_parameter_call(clock_genotype);
 clock_parameters = clock_parameters0;
 nCP = length(clock_parameters);
@@ -54,5 +53,6 @@ for i = nP+1:nP+nCP
     end
 end
 
-save('sens_analysis_results_WT','output_basal','temp','rise','set','co2','light','p0','clock_parameters0','clock_genotype','deltaP','errors')
+save('sens_analysis_results_p97','output_basal','temp','rise','set','co2','light','p0','clock_parameters0','clock_genotype','deltaP','errors','sens')
+
 

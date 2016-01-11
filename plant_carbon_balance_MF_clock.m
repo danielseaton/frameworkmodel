@@ -1,7 +1,9 @@
 function [rlc_pt1,rrc_pt1,leaf_res,root_res,leaf_carbon,root_carbon,...
          sucrose_carbon,starch_carbon,MF_carbon,rgtotal,rmtotal,totalCarbon,Assim,suc_sta,net_rate,new_starch_module_state]...
          = plant_carbon_balance_MF_clock(hour_idx,Tleaf,CO2,PAR,sunrise,sunset,is_light,...
-           rsratio,rosette_area,leaf_c,root_c,suc_c,sta_c,MF_c,rgtot,rmtot,timestep,sta_c_endday,MF_c_endday,efficiency,growth_capacity,clock_output,starch_module_state)
+           rsratio,rosette_area,leaf_c,root_c,suc_c,sta_c,MF_c,rgtot,rmtot,...
+           timestep,sta_c_endday,MF_c_endday,efficiency,growth_capacity,...
+           clock_output,starch_module_state,starch_parameters)
 
 global p d
 
@@ -38,7 +40,7 @@ end
 % DANIEL
 %Calculating starch degradation. Start by just connecting it in a trivial
 %way, reading out starch content and regulating X appropriately.
-[new_starch_module_state,starch_consumption] = starch_module(hour_idx,starch_module_state,sta_c,leaf_c,is_light,clock_output);
+[new_starch_module_state,starch_consumption] = starch_module(hour_idx,starch_module_state,sta_c,leaf_c,is_light,clock_output,starch_parameters);
 
 %[starch_consumption] =
 %starch_module(t,clock_output,sta_c,leaf_c,is_light);

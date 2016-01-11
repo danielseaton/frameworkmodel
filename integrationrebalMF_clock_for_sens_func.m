@@ -1,4 +1,4 @@
-function output = integrationrebalMF_clock_for_sens_func(temp,rise,set,co2,light,clock_parameters)
+function output = integrationrebalMF_clock_for_sens_func(temp,rise,set,co2,light,clock_parameters,starch_parameters)
 
 global p
 
@@ -397,7 +397,7 @@ while day_idx <= N_max_days && ~(has_flowered)
              suc_sta(t),net_rate(t),new_starch_module_state] = plant_carbon_balance_MF_clock(hour_idx,T(t),CO2(t),PAR(t),sunrise(t),sunset(t),is_light(t),...
                    rsratio(t),S_intercept(t-1),Leaf_carbon(t-1),Root_carbon(t-1),...
                    Sucrose_carbon(t-1),Starch_carbon(t-1),MF_carbon(t-1),rgtot(t-1),rmtot(t-1),timestep,sta_c_endday,MF_c_endday,efficiency(t),...
-                   growth_capacity(t),clock_output,starch_module_state);
+                   growth_capacity(t),clock_output,starch_module_state,starch_parameters);
 
             starch_module_state = new_starch_module_state;
 
