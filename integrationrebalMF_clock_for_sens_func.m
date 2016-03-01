@@ -385,12 +385,50 @@ while day_idx <= N_max_days && ~(has_flowered)
 end
 
 %-------------------------------End-of-model-------------------------------
-totgrowth = sum(Normalisedgrowth(eme+25:end));
-totcost = sum(Normalisedcost(eme+25:end));
-minratio = totcost/totgrowth;
-Leaf_no(end)
-S_intercept(end)
-Root_mass(end)
+
+sim_data = struct();
+
+sim_data.totgrowth = sum(Normalisedgrowth(eme+25:end));
+sim_data.totcost = sum(Normalisedcost(eme+25:end));
+sim_data.minratio = totcost/totgrowth;
+sim_data.final_leaf_no = Leaf_no(end);
+sim_data.final_S_intercept = S_intercept(end);
+sim_data.final_root_mass = Root_mass(end);
+
+sim_data.Total_shoot = Total_shoot;
+sim_data.Starch_carbon = Starch_carbon;
+sim_data.MF_carbon = MF_carbon;
+
+sim_data.Fresh_weight = Total_shoot(end)/d; %g FW rosette
+sim_data.starch = Starch_carbon; %g C
+sim_data.sucrose = Sucrose_carbon; %g C
+sim_data.NPP = assim - rlc_pt1 - rrc_pt1 - leaf_res - root_res; %g C/h
+sim_data.Gas_exchange_perFW = NPP./(Total_shoot/d); %g C/g FW/h
+sim_data.starch_perFW = starch./(Total_shoot/d); %g C/g FW
+sim_data.sucrose_perFW = sucrose./(Total_shoot/d); %g C/g FW
+
+
+sim_data.FW_ED = Total_shoot(input_size+Photoperiod-24)/d; %g
+sim_data.FW_EN = Total_shoot(input_size)/d; %g
+sim_data.AD = Gas_exchange_perFW(input_size+2-24); %g C/g FW/h
+sim_data.AR1 = Gas_exchange_perFW(input_size-24+Photoperiod+5); %g C/g FW/h
+sim_data.AR2 = Gas_exchange_perFW(input_size-1); %g C/g FW/h
+
+
+sim_data.FW = Total_shoot/d;
+sim_data.starchC6 = Starch_carbon/12/6*10^6./FW;
+sim_data.malatefumarateC4 = MF_carbon/12/4*10^6./FW;
+sim_data.sugar = Sucrose_carbon/12/12*10^6./FW;
+sim_data.gFW_22 = FW(22*24);
+sim_data.gFW_28 = FW(28*24);
+sim_data.gFW_29 = FW(29*24);
+sim_data.gFW_38 = FW(38*24);
+sim_data.starchC6_ED_28 = starchC6(28.5*24);
+sim_data.starchC6_EN_28 = starchC6(29*24);
+sim_data.AperFW = Gas_exchange_perFW(38*24+1)/12*10^6; %micromol CO2/g FW/h
+sim_data.RperFW = Gas_exchange_perFW(38*24-1)/12*10^6; %micromol CO2/g FW/h
+sim_data.Aperarea = NPP(38*24+1)/S_intercept(38*24)/12*10^6/10000; %micromol CO2/cm2/h
+sim_data.Rperarea = NPP(38*24-1)/S_intercept(38*24-2)/12*10^6/10000; %micromol CO2/cm2/h
 
 Measured_day = [22 28 29 38];
 Measured_hour = [0 12 24];
@@ -460,37 +498,6 @@ end
 op = 0;
 
 if op == 0
-    
-Fresh_weight = Total_shoot(end)/d; %g FW rosette
-starch = Starch_carbon; %g C
-sucrose = Sucrose_carbon; %g C
-NPP = assim - rlc_pt1 - rrc_pt1 - leaf_res - root_res; %g C/h
-Gas_exchange_perFW = NPP./(Total_shoot/d); %g C/g FW/h
-starch_perFW = starch./(Total_shoot/d); %g C/g FW
-sucrose_perFW = sucrose./(Total_shoot/d); %g C/g FW
-
-
-FW_ED = Total_shoot(input_size+Photoperiod-24)/d; %g
-FW_EN = Total_shoot(input_size)/d; %g
-AD = Gas_exchange_perFW(input_size+2-24); %g C/g FW/h
-AR1 = Gas_exchange_perFW(input_size-24+Photoperiod+5); %g C/g FW/h
-AR2 = Gas_exchange_perFW(input_size-1); %g C/g FW/h
-
-
-FW = Total_shoot/d;
-starchC6 = Starch_carbon/12/6*10^6./FW;
-malatefumarateC4 = MF_carbon/12/4*10^6./FW;
-sugar = Sucrose_carbon/12/12*10^6./FW;
-gFW_22 = FW(22*24);
-gFW_28 = FW(28*24);
-gFW_29 = FW(29*24);
-gFW_38 = FW(38*24);
-starchC6_ED_28 = starchC6(28.5*24);
-starchC6_EN_28 = starchC6(29*24);
-AperFW = Gas_exchange_perFW(38*24+1)/12*10^6; %micromol CO2/g FW/h
-RperFW = Gas_exchange_perFW(38*24-1)/12*10^6; %micromol CO2/g FW/h
-Aperarea = NPP(38*24+1)/S_intercept(38*24)/12*10^6/10000; %micromol CO2/cm2/h
-Rperarea = NPP(38*24-1)/S_intercept(38*24-2)/12*10^6/10000; %micromol CO2/cm2/h
 
 % figure
 % hold on
