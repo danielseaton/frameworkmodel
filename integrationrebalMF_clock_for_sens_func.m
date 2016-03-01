@@ -2,35 +2,8 @@ function output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,C
 
 global p
 
-% temp = 20.5;
-% rise = 0;
-% set = 12;
-% co2 = 42;
-% light = 145;
-
 %specify Col accession for phenology model threshold
 geno = 2;
-
-% %Mugford
-% temp = 20;
-% rise = 0;
-% set = 12;
-% co2 = 42;
-% light = 190;
-
-% %Ishihara
-% temp = 19.3333;
-% rise = 0;
-% set = 8;
-% co2 = 42;
-% light = 150;
-
-% %Comparot-Moss conditions
-% temp = 20;
-% rise = 0;
-% set = 12;
-% co2 = 42;
-% light = 170;
 
 %Specifying the genotype for the clock and starch models
 genotype = 1;
@@ -92,21 +65,6 @@ ad_interc = p(70); %y-intercept for the adult rate of leaf appearance
 SLA_cot = p(71); %SLA for cotyledons (in m2/g dry mass) Fig. 3 Christophe et al (2008)
 SLA_exp = p(72); %curve shape for SLA against thermal time
 
-clear starch
-clear sugar
-clear GPP
-clear NPP
-clear GPP_day
-clear NPP_day 
-clear net_to_gross 
-clear net_to_gross_day 
-clear growth_res_ratio 
-clear Gas_exchange_perFW 
-clear starch_perFW 
-clear sugar_perFW 
-
-
-
 %%%This is parameterisation - parameters derived from other parameters but
 %%%not depending on conditions
 %Expansion period for the root system
@@ -153,8 +111,6 @@ end
 
 starch_module_state = [1,1,1,1];
 FT_module_state =ones(1,18);
-
-% clock_genotype = {''};
 
 % set whether the phenology model controls the end of the simulation
 N_max_days = 40; %days max simulation
@@ -298,9 +254,7 @@ while day_idx <= N_max_days && ~(has_flowered)
 
 
             %Rosette area (at the previous time point):      
-            %FUNC: calculate area a previous time point
             [S_intercept,Func_area] = calculate_area(t,S,petiole,input_size,Appear,Leaf_no,Sf,S_intercept,Func_area);
-            %END FUNC:  calculate area a previous time point
 
 
             %To determine whole-plant carbon balance (at the current time point):
@@ -314,12 +268,9 @@ while day_idx <= N_max_days && ~(has_flowered)
             end
 
             %To determine current leaf number:
-            %FUNC: determine current leaf number
             [Appear,Leaf_mass,Si,Leaf_no,GC,GCstart] = determine_current_leaf_number(...
                 t,probability,CumThrm,phyllochron,Appear,Leaf_mass,Si,Leaf_no,GC,GCstart);
-            %END FUNC: determine current leaf number
 
-            %FUNC: root shoot partitioning
             %To calculate sink variation for leaf:
             [fL,fR,rsratio] = calculate_root_shoot_sink_variation(t,Leaf_no,TLcot,Maxfcot,...
                 TLtrue,MaxfL,aL,bL,CumThrm,Appear,TR,MaxfR,aR,bR,PR,PL,rsratio,...
@@ -371,12 +322,10 @@ while day_idx <= N_max_days && ~(has_flowered)
 
 
             %To determine the amount of sugar accumulated over a day
-            %%FUNC: [efficiency,growth_capacity]=calculate_sugar_acc(t,eme,efficiency,growth_capacity,is_light)
             [efficiency,growth_capacity]=calculate_sugar_acc(t,p,eme,...
                 efficiency,growth_capacity,is_light);
-            %END FUNC: calculate_sugar_acc
 
-            %DANIEL: added new_clock_state output and clock_state input
+            
             [rlc_pt1(t),rrc_pt1(t),leaf_res(t),root_res(t),...
              Leaf_carbon(t),Root_carbon(t),Sucrose_carbon(t),Starch_carbon(t),MF_carbon(t),rgtot(t),rmtot(t),totalC(t),assim(t),...
              suc_sta(t),net_rate(t),new_starch_module_state] = plant_carbon_balance_MF_clock(hour_idx,T(t),CO2(t),PAR(t),sunrise(t),sunset(t),is_light(t),...
