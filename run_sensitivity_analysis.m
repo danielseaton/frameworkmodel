@@ -4,6 +4,21 @@ set = 12;
 co2 = 42;
 light = 145;
 
+%Calling for meteorological data
+%_______________________________  
+
+%hour,T,sunrise,sunset,CO2,PAR
+load('weather.mat')
+
+hour=weather(:,1);
+T=temp*weather(:,2);
+sunrise=rise*weather(:,3);
+sunset=set*weather(:,4); 
+CO2=co2*weather(:,5); %CO2 partial pressure (Pa)
+PAR=light*weather(:,6); %total absorbed PAR per unit leaf area (micromol m-2 s-1)
+Photoperiod = sunset(end) - sunrise(end);
+
+
 
 load('parameter.mat')
 
@@ -22,7 +37,7 @@ clock_parameters0 = P2011_parameter_call(clock_genotype);
 clock_parameters = clock_parameters0;
 nCP = length(clock_parameters);
 
-output_basal = integrationrebalMF_clock_for_sens_func(temp,rise,set,co2,light,clock_parameters);
+output_basal = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters);
 
 nD = length(output_basal); %number of dimensions of output
 
@@ -33,7 +48,7 @@ for i = 1:nP
     p = p0;
     p(i) = p(i)*(1+deltaP);
     try
-        output = integrationrebalMF_clock_for_sens_func(temp,rise,set,co2,light,clock_parameters);
+        output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters);
         sens(i,:) = ((output-output_basal)/deltaP)./output;
     catch
         errors = [errors;i];
@@ -46,7 +61,7 @@ for i = nP+1:nP+nCP
     clock_parameters = clock_parameters0;
     clock_parameters(i-nP) = clock_parameters(i-nP)*(1+deltaP);
     try
-        output = integrationrebalMF_clock_for_sens_func(temp,rise,set,co2,light,clock_parameters);
+        output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters);
         sens(i,:) = ((output-output_basal)/deltaP)./output;
     catch
         errors = [errors;i];

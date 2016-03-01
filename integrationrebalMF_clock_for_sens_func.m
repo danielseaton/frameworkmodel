@@ -1,4 +1,4 @@
-function output = integrationrebalMF_clock_for_sens_func(temp,rise,set,co2,light,clock_parameters,starch_parameters)
+function output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters)
 
 global p
 
@@ -32,6 +32,7 @@ geno = 2;
 % co2 = 42;
 % light = 170;
 
+%Specifying the genotype for the clock and starch models
 genotype = 1;
 
 %Calling for parameters
@@ -61,22 +62,6 @@ end
 % w = 0.9;
 
 d = 1-w; %dry matter
-
-
-%Calling for meteorological data
-%_______________________________  
-    
-    
-
-load('weather.mat')
-
-hour=weather(:,1);
-T=temp*weather(:,2);
-sunrise=rise*weather(:,3);
-sunset=set*weather(:,4); 
-CO2=co2*weather(:,5); %CO2 partial pressure (Pa)
-PAR=light*weather(:,6); %total absorbed PAR per unit leaf area (micromol m-2 s-1)
-Photoperiod = sunset(end) - sunrise(end);
 
 
 %Parameters for growth model
