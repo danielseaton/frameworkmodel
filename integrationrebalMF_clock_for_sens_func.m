@@ -1,12 +1,9 @@
-function output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters)
-
-global p
+function output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p)
 
 %specify Col accession for phenology model threshold
 geno = 2;
 
-%Specifying the genotype for the clock and starch models
-genotype = 1;
+
 
 %Calling for parameters
 %______________________
@@ -16,6 +13,10 @@ global p d mf_use
 addpath('PIF_CO_FT_model')
 
 probability = 1; %deterministic
+
+
+%Specifying the genotype for the clock and starch models
+genotype = 1;
 
 switch genotype
     case 1
@@ -390,9 +391,10 @@ sim_data = struct();
 
 sim_data.input_size = input_size;
 
+sim_data.S_intercept = S_intercept;
 sim_data.totgrowth = sum(Normalisedgrowth(eme+25:end));
 sim_data.totcost = sum(Normalisedcost(eme+25:end));
-sim_data.minratio = totcost/totgrowth;
+sim_data.minratio = sim_data.totcost/sim_data.totgrowth;
 sim_data.final_leaf_no = Leaf_no(end);
 sim_data.final_S_intercept = S_intercept(end);
 sim_data.final_root_mass = Root_mass(end);
@@ -405,32 +407,32 @@ sim_data.Fresh_weight = Total_shoot(end)/d; %g FW rosette
 sim_data.starch = Starch_carbon; %g C
 sim_data.sucrose = Sucrose_carbon; %g C
 sim_data.NPP = assim - rlc_pt1 - rrc_pt1 - leaf_res - root_res; %g C/h
-sim_data.Gas_exchange_perFW = NPP./(Total_shoot/d); %g C/g FW/h
-sim_data.starch_perFW = starch./(Total_shoot/d); %g C/g FW
-sim_data.sucrose_perFW = sucrose./(Total_shoot/d); %g C/g FW
+sim_data.Gas_exchange_perFW = sim_data.NPP./(Total_shoot/d); %g C/g FW/h
+sim_data.starch_perFW = sim_data.starch./(Total_shoot/d); %g C/g FW
+sim_data.sucrose_perFW = sim_data.sucrose./(Total_shoot/d); %g C/g FW
 
 
 sim_data.FW_ED = Total_shoot(input_size+Photoperiod-24)/d; %g
 sim_data.FW_EN = Total_shoot(input_size)/d; %g
-sim_data.AD = Gas_exchange_perFW(input_size+2-24); %g C/g FW/h
-sim_data.AR1 = Gas_exchange_perFW(input_size-24+Photoperiod+5); %g C/g FW/h
-sim_data.AR2 = Gas_exchange_perFW(input_size-1); %g C/g FW/h
+sim_data.AD = sim_data.Gas_exchange_perFW(input_size+2-24); %g C/g FW/h
+sim_data.AR1 = sim_data.Gas_exchange_perFW(input_size-24+Photoperiod+5); %g C/g FW/h
+sim_data.AR2 = sim_data.Gas_exchange_perFW(input_size-1); %g C/g FW/h
 
 
 sim_data.FW = Total_shoot/d;
-sim_data.starchC6 = Starch_carbon/12/6*10^6./FW;
-sim_data.malatefumarateC4 = MF_carbon/12/4*10^6./FW;
-sim_data.sugar = Sucrose_carbon/12/12*10^6./FW;
-sim_data.gFW_22 = FW(22*24);
-sim_data.gFW_28 = FW(28*24);
-sim_data.gFW_29 = FW(29*24);
-sim_data.gFW_38 = FW(38*24);
-sim_data.starchC6_ED_28 = starchC6(28.5*24);
-sim_data.starchC6_EN_28 = starchC6(29*24);
-sim_data.AperFW = Gas_exchange_perFW(38*24+1)/12*10^6; %micromol CO2/g FW/h
-sim_data.RperFW = Gas_exchange_perFW(38*24-1)/12*10^6; %micromol CO2/g FW/h
-sim_data.Aperarea = NPP(38*24+1)/S_intercept(38*24)/12*10^6/10000; %micromol CO2/cm2/h
-sim_data.Rperarea = NPP(38*24-1)/S_intercept(38*24-2)/12*10^6/10000; %micromol CO2/cm2/h
+sim_data.starchC6 = Starch_carbon/12/6*10^6./sim_data.FW;
+sim_data.malatefumarateC4 = MF_carbon/12/4*10^6./sim_data.FW;
+sim_data.sugar = Sucrose_carbon/12/12*10^6./sim_data.FW;
+sim_data.gFW_22 = sim_data.FW(22*24);
+sim_data.gFW_28 = sim_data.FW(28*24);
+sim_data.gFW_29 = sim_data.FW(29*24);
+sim_data.gFW_38 = sim_data.FW(38*24);
+sim_data.starchC6_ED_28 = sim_data.starchC6(28.5*24);
+sim_data.starchC6_EN_28 = sim_data.starchC6(29*24);
+sim_data.AperFW = sim_data.Gas_exchange_perFW(38*24+1)/12*10^6; %micromol CO2/g FW/h
+sim_data.RperFW = sim_data.Gas_exchange_perFW(38*24-1)/12*10^6; %micromol CO2/g FW/h
+sim_data.Aperarea = sim_data.NPP(38*24+1)/S_intercept(38*24)/12*10^6/10000; %micromol CO2/cm2/h
+sim_data.Rperarea = sim_data.NPP(38*24-1)/S_intercept(38*24-2)/12*10^6/10000; %micromol CO2/cm2/h
 
 
-output = [gFW_38,AperFW,RperFW,starchC6_ED_28,starchC6_EN_28];
+output = [sim_data.gFW_38,sim_data.AperFW,sim_data.RperFW,sim_data.starchC6_ED_28,sim_data.starchC6_EN_28];
