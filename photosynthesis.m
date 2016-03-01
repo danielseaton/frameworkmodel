@@ -1,6 +1,4 @@
-function [net_rate] = photosynthesis(CO2,Tleaf,PAR,vlmax25,daylength)
-
-global p
+function [net_rate] = photosynthesis(CO2,Tleaf,PAR,vlmax25,daylength,p)
 
 %Rasse and Tocquin, 2006
 

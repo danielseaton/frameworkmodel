@@ -1,9 +1,7 @@
-function [DayPhenThrm,FT_module_state] = phen(hour,T,sunrise,sunset,geno,clock_genotype,clock_output,FT_module_state)
+function [DayPhenThrm,FT_module_state] = phen(hour,T,sunrise,sunset,geno,clock_genotype,clock_output,FT_module_state,p)
 
 % Fixed parameters
 %_________________
-
-global p
 
 Tb = p(1);
 Tvmin = p(2);

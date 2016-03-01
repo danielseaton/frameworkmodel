@@ -20,13 +20,13 @@ is_light = 1;
 %Calculating photosynthesis
 %__________________________
         
-[net_rate] = photosynthesis(CO2,Tleaf,PAR,vlmax25,daylength);
+[net_rate] = photosynthesis(CO2,Tleaf,PAR,vlmax25,daylength,p);
         
         
 %Calculating maintenance respiration
 %___________________________________
         
-[leaf_res,root_res] = mainres(Tleaf,leaf_c,root_c,suc_c,rosette_area,timestep);
+[leaf_res,root_res] = mainres(Tleaf,leaf_c,root_c,suc_c,rosette_area,timestep,p);
         
         
 %Calculating Assimilatory flux
@@ -35,15 +35,17 @@ is_light = 1;
 sta_c_endday = sta_c;
 MF_c_endday = MF_c;
 
+dummy_starch_consumption = 0;% doesn't get used anyway because is_light=1
+
 [suc_sta_base,suc_MF_base,sta_use,MF_use,suc_equi,al_suc,suc_c_disp,suc_c_interm,Assim]...
 = assimilation_MF_clock(daylength,is_light,net_rate,timestep,leaf_res,...
-  root_res,suc_c,rosette_area,sta_c_endday,MF_c_endday,leaf_c);
+  root_res,suc_c,rosette_area,sta_c_endday,MF_c_endday,leaf_c,dummy_starch_consumption,p);
 
 
 %Calculating organ demand
 %________________________
 
-[rrc_pt,totdem,rlc_pt,root_growth,leaf_growth] = organdemand(timestep,rsratio,leaf_c,growth_capacity);
+[rrc_pt,totdem,rlc_pt,root_growth,leaf_growth] = organdemand(timestep,rsratio,leaf_c,growth_capacity,p);
 
 
 %Calculating allocation 

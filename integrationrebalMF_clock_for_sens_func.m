@@ -3,12 +3,10 @@ function output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,C
 %specify Col accession for phenology model threshold
 geno = 2;
 
-
-
 %Calling for parameters
 %______________________
 
-global p d mf_use
+global d mf_use
 
 addpath('PIF_CO_FT_model')
 
@@ -134,11 +132,11 @@ while day_idx <= N_max_days && ~(has_flowered)
     
     %run phenology model
     if run_phenology_model
-        [DayPhenThrm,FT_module_state] = phen(T,sunrise,sunset,geno,clock_output,FT_module_state);
+        [DayPhenThrm,FT_module_state] = phen(T,sunrise,sunset,geno,clock_output,FT_module_state,p);
     end
     DayPhenThrm = 0;
     CumPhenThrm = DayPhenThrm+CumPhenThrm;
-    has_flowered = flowering_threshold_test(CumPhenThrm,genotype);
+    has_flowered = flowering_threshold_test(CumPhenThrm,genotype,p);
     
     for hour_idx = 1:24
         %timepoint
@@ -332,7 +330,7 @@ while day_idx <= N_max_days && ~(has_flowered)
              suc_sta(t),net_rate(t),new_starch_module_state] = plant_carbon_balance_MF_clock(hour_idx,T(t),CO2(t),PAR(t),sunrise(t),sunset(t),is_light(t),...
                    rsratio(t),S_intercept(t-1),Leaf_carbon(t-1),Root_carbon(t-1),...
                    Sucrose_carbon(t-1),Starch_carbon(t-1),MF_carbon(t-1),rgtot(t-1),rmtot(t-1),timestep,sta_c_endday,MF_c_endday,efficiency(t),...
-                   growth_capacity(t),clock_output,starch_module_state,starch_parameters);
+                   growth_capacity(t),clock_output,starch_module_state,starch_parameters,p);
 
             starch_module_state = new_starch_module_state;
 

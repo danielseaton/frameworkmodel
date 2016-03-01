@@ -1,6 +1,4 @@
-function has_flowered = flowering_threshold_test(CumPhenThrm,geno)
-
-global p
+function has_flowered = flowering_threshold_test(CumPhenThrm,geno,p)
 
 if  geno ==1
     

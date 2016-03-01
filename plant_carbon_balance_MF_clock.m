@@ -3,9 +3,9 @@ function [rlc_pt1,rrc_pt1,leaf_res,root_res,leaf_carbon,root_carbon,...
          = plant_carbon_balance_MF_clock(hour_idx,Tleaf,CO2,PAR,sunrise,sunset,is_light,...
            rsratio,rosette_area,leaf_c,root_c,suc_c,sta_c,MF_c,rgtot,rmtot,...
            timestep,sta_c_endday,MF_c_endday,efficiency,growth_capacity,...
-           clock_output,starch_module_state,starch_parameters)
+           clock_output,starch_module_state,starch_parameters,p)
 
-global p d
+global d
 
 %Initial values
 %______________
@@ -25,7 +25,7 @@ daylength = sunset - sunrise;
         
 if      is_light == 1
               
-            [net_rate] = efficiency*photosynthesis(CO2,Tleaf,PAR,vlmax25,daylength); %micromol CO2 m-2 leaf s-1        
+            [net_rate] = efficiency*photosynthesis(CO2,Tleaf,PAR,vlmax25,daylength,p); %micromol CO2 m-2 leaf s-1        
               
 else
         net_rate = 0;
@@ -35,7 +35,7 @@ end
 %Calculating maintenance respiration
 %___________________________________
         
-[leaf_res,root_res] = mainres(Tleaf,leaf_c,root_c,suc_c,rosette_area,timestep);
+[leaf_res,root_res] = mainres(Tleaf,leaf_c,root_c,suc_c,rosette_area,timestep,p);
 
 % DANIEL
 %Calculating starch degradation. Start by just connecting it in a trivial
@@ -54,13 +54,13 @@ end
 %net_rate is the rate of photosynthesis
 [suc_sta_base,suc_MF_base,sta_use,MF_use,suc_equi,al_suc,suc_c_disp,suc_c_interm,Assim]...
 = assimilation_MF_clock(daylength,is_light,net_rate,timestep,leaf_res,...
-root_res,suc_c,rosette_area,sta_c_endday,MF_c_endday,leaf_c,starch_consumption);
+root_res,suc_c,rosette_area,sta_c_endday,MF_c_endday,leaf_c,starch_consumption,p);
       
       
 %Calculating organ demand
 %________________________    
 	
-[rrc_pt,totdem,rlc_pt,root_growth,leaf_growth] = organdemand(timestep,rsratio,leaf_c,growth_capacity);
+[rrc_pt,totdem,rlc_pt,root_growth,leaf_growth] = organdemand(timestep,rsratio,leaf_c,growth_capacity,p);
 
 
 

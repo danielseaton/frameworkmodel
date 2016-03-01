@@ -1,6 +1,4 @@
-function [leaf_res,root_res] = mainres(Tleaf,leaf_c,root_c,suc_c_perplant,rosette_area,timestep)
-
-global p
+function [leaf_res,root_res] = mainres(Tleaf,leaf_c,root_c,suc_c_perplant,rosette_area,timestep,p)
 
 %Calculation for maintenance respiration
 %_______________________________________
