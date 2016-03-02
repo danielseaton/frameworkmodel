@@ -29,7 +29,7 @@ switch genotype
     case 4
         w = 0.89; %water content
         mf_use = 0.25; %malate+fumarate turnover
-end        
+end
 
 % w = 0.9;
 
@@ -206,7 +206,8 @@ while day_idx <= N_max_days && ~(has_flowered)
                                                       sunrise(eme),sunset(eme),rsratio(eme),...
                                                       S_intercept(eme),Leaf_carbon(eme),...
                                                       Root_carbon(eme),Sucrose_carbon(eme),...
-                                                      Starch_carbon(eme),MF_carbon(eme),timestep,growth_capacity(eme));
+                                                      Starch_carbon(eme),MF_carbon(eme),...
+                                                      timestep,growth_capacity(eme),p);
                 %%%END FUNC: initialise seedling state at emergence
 
                 GC = 1; %number of growth cycle elapsed                                  
