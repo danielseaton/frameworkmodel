@@ -1,7 +1,7 @@
 function output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p)
 
 %specify Col accession for phenology model threshold
-geno = 2;
+flowering_thresh_geno = 2;
 
 %Calling for parameters
 %______________________
@@ -132,11 +132,12 @@ while day_idx <= N_max_days && ~(has_flowered)
     
     %run phenology model
     if run_phenology_model
-        [DayPhenThrm,FT_module_state] = phen(T,sunrise,sunset,geno,clock_output,FT_module_state,p);
+        [DayPhenThrm,FT_module_state] = phen(T,sunrise,sunset,flowering_thresh_geno,clock_output,FT_module_state,p);
+    else
+        DayPhenThrm = 0;
     end
-    DayPhenThrm = 0;
     CumPhenThrm = DayPhenThrm+CumPhenThrm;
-    has_flowered = flowering_threshold_test(CumPhenThrm,genotype,p);
+    has_flowered = flowering_threshold_test(CumPhenThrm,flowering_thresh_geno,p);
     
     for hour_idx = 1:24
         %timepoint
