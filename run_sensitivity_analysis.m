@@ -20,6 +20,29 @@ Photoperiod = sunset(end) - sunrise(end);
 
 
 
+%Specifying the genotype for the clock and starch models
+experiment_genotype_index = 1;
+switch experiment_genotype_index
+    case 1
+        w = 0.91; %water content
+        mf_use = 0.7; %malate+fumarate turnover
+    case 2
+        w = 0.89; %water content
+        mf_use = 0.7; %malate+fumarate turnover
+    case 3
+        w = 0.89; %water content
+        mf_use = 0.7; %malate+fumarate turnover
+    case 4
+        w = 0.89; %water content
+        mf_use = 0.25; %malate+fumarate turnover
+end
+
+% w = 0.9;
+d = 1-w; %dry matter
+
+
+
+
 load('parameter.mat')
 
 p=parameter;
@@ -41,7 +64,7 @@ starch_parameters0 = starch_parameter_call(starch_genotype);
 starch_parameters = starch_parameters0;
 nSP = length(starch_parameters);
 
-output_basal = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p0);
+output_basal = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p0,d,mf_use);
 
 nD = length(output_basal); %number of dimensions of output
 
@@ -52,7 +75,7 @@ for i = 1:nP
     p = p0;
     p(i) = p(i)*(1+deltaP);
     try
-        output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p);
+        output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use);
         sens(i,:) = ((output-output_basal)/deltaP)./output;
     catch
         errors = [errors;i];
@@ -65,7 +88,7 @@ for i = nP+1:nP+nCP
     clock_parameters = clock_parameters0;
     clock_parameters(i-nP) = clock_parameters(i-nP)*(1+deltaP);
     try
-        output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p);
+        output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use);
         sens(i,:) = ((output-output_basal)/deltaP)./output;
     catch
         errors = [errors;i];

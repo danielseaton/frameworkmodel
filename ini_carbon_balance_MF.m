@@ -1,5 +1,5 @@
 function [rlc_pt1,rrc_pt1,leaf_res,root_res,rgtot,rmtot,totalC,Assim] = ...
-    ini_carbon_balance_MF(Tleaf,CO2,PAR,sunrise,sunset,rsratio,rosette_area,leaf_c,root_c,suc_c,sta_c,MF_c,timestep,growth_capacity,p)
+    ini_carbon_balance_MF(Tleaf,CO2,PAR,sunrise,sunset,rsratio,rosette_area,leaf_c,root_c,suc_c,sta_c,MF_c,timestep,growth_capacity,p,mf_use)
 
 %Initial values
 %______________
@@ -37,7 +37,7 @@ dummy_starch_consumption = 0;% doesn't get used anyway because is_light=1
 
 [suc_sta_base,suc_MF_base,sta_use,MF_use,suc_equi,al_suc,suc_c_disp,suc_c_interm,Assim]...
 = assimilation_MF_clock(daylength,is_light,net_rate,timestep,leaf_res,...
-  root_res,suc_c,rosette_area,sta_c_endday,MF_c_endday,leaf_c,dummy_starch_consumption,p);
+  root_res,suc_c,rosette_area,sta_c_endday,MF_c_endday,leaf_c,dummy_starch_consumption,p,mf_use);
 
 
 %Calculating organ demand

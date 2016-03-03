@@ -1,8 +1,6 @@
 function [suc_sta_base,suc_MF_base,sta_use,MF_use,suc_equi,al_suc,suc_c_disp,suc_c_interm,al_pt_plant_assim]...
     = assimilation_MF_clock(daylength,is_light,net_rate,timestep,leaf_res,...
-    root_res,suc_c_perplant,rosette_area,sta_c_endday,MF_c_endday,leaf_c,starch_consumption,p)
-
-global mf_use
+    root_res,suc_c_perplant,rosette_area,sta_c_endday,MF_c_endday,leaf_c,starch_consumption,p,mf_use)
 
 convert_to_gC = timestep*p(59)*10^(-6)*12; %conversion factor for umol/m2 leaf/sec to gC/m2 leaf/timestep
 

@@ -3,9 +3,7 @@ function [rlc_pt1,rrc_pt1,leaf_res,root_res,leaf_carbon,root_carbon,...
          = plant_carbon_balance_MF_clock(hour_idx,Tleaf,CO2,PAR,sunrise,sunset,is_light,...
            rsratio,rosette_area,leaf_c,root_c,suc_c,sta_c,MF_c,rgtot,rmtot,...
            timestep,sta_c_endday,MF_c_endday,efficiency,growth_capacity,...
-           clock_output,starch_module_state,starch_parameters,p)
-
-global d
+           clock_output,starch_module_state,starch_parameters,p,mf_use)
 
 %Initial values
 %______________
@@ -54,7 +52,7 @@ end
 %net_rate is the rate of photosynthesis
 [suc_sta_base,suc_MF_base,sta_use,MF_use,suc_equi,al_suc,suc_c_disp,suc_c_interm,Assim]...
 = assimilation_MF_clock(daylength,is_light,net_rate,timestep,leaf_res,...
-root_res,suc_c,rosette_area,sta_c_endday,MF_c_endday,leaf_c,starch_consumption,p);
+root_res,suc_c,rosette_area,sta_c_endday,MF_c_endday,leaf_c,starch_consumption,p,mf_use);
       
       
 %Calculating organ demand

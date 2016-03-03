@@ -1,4 +1,4 @@
-function output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p)
+function output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use)
 
 %specify Col accession for phenology model threshold
 flowering_thresh_geno = 2;
@@ -6,34 +6,9 @@ flowering_thresh_geno = 2;
 %Calling for parameters
 %______________________
 
-global d mf_use
-
 addpath('PIF_CO_FT_model')
 
 probability = 1; %deterministic
-
-
-%Specifying the genotype for the clock and starch models
-genotype = 1;
-
-switch genotype
-    case 1
-        w = 0.91; %water content
-        mf_use = 0.7; %malate+fumarate turnover
-    case 2
-        w = 0.89; %water content
-        mf_use = 0.7; %malate+fumarate turnover
-    case 3
-        w = 0.89; %water content
-        mf_use = 0.7; %malate+fumarate turnover
-    case 4
-        w = 0.89; %water content
-        mf_use = 0.25; %malate+fumarate turnover
-end
-
-% w = 0.9;
-
-d = 1-w; %dry matter
 
 
 %Parameters for growth model
@@ -208,7 +183,7 @@ while day_idx <= N_max_days && ~(has_flowered)
                                                       S_intercept(eme),Leaf_carbon(eme),...
                                                       Root_carbon(eme),Sucrose_carbon(eme),...
                                                       Starch_carbon(eme),MF_carbon(eme),...
-                                                      timestep,growth_capacity(eme),p);
+                                                      timestep,growth_capacity(eme),p,mf_use);
                 %%%END FUNC: initialise seedling state at emergence
 
                 GC = 1; %number of growth cycle elapsed                                  
@@ -332,7 +307,7 @@ while day_idx <= N_max_days && ~(has_flowered)
              suc_sta(t),net_rate(t),new_starch_module_state] = plant_carbon_balance_MF_clock(hour_idx,T(t),CO2(t),PAR(t),sunrise(t),sunset(t),is_light(t),...
                    rsratio(t),S_intercept(t-1),Leaf_carbon(t-1),Root_carbon(t-1),...
                    Sucrose_carbon(t-1),Starch_carbon(t-1),MF_carbon(t-1),rgtot(t-1),rmtot(t-1),timestep,sta_c_endday,MF_c_endday,efficiency(t),...
-                   growth_capacity(t),clock_output,starch_module_state,starch_parameters,p);
+                   growth_capacity(t),clock_output,starch_module_state,starch_parameters,p,mf_use);
 
             starch_module_state = new_starch_module_state;
 
