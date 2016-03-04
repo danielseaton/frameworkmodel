@@ -86,21 +86,11 @@ numt3 = s_elec*(273+Tleaf)-h_curvature;
 denomt3 = R*(273+Tleaf);
 term3 = 1+exp(numt3/denomt3); %intermdeiate calculation fro jm
 
-switch daylength
-    case 4
-        jv = 2.1; %assuming plateau, TiMet WP1.2A
-    case 6
-        jv = 2.1; %assuming plateau, TiMet WP1.2A
-    case 8
-        jv = 2.1;
-    case 12
-        jv = 1.7;
-    case 14
-        jv = 1.4;
-    case 18
-        jv = 1.2; %extrapolated 
-end        
-     
+daylengths = [4,6,8,12,14,18];
+jv_values = [2.1,2.1,2.1,1.7,1.4,1.2];
+%linear interpolation to calculate jv as a function of daylength (in the
+%range 4-18hrs)
+jv = interp1(daylengths,jv_values,daylength);     
 
 %jm25_pot = p(53)*vlmax25; %Potential rate of electron transport per unit leaf area at 25 (micromol m-2 s-1)
 jm25_pot = jv*vlmax25;
