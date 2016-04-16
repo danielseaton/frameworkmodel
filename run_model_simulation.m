@@ -55,4 +55,4 @@ nCP = length(clock_parameters);
 starch_parameters = starch_parameter_call(starch_genotype);
 nSP = length(starch_parameters);
 
-[output,sim_data] = run_simulation(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p0,d,mf_use);
+[output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p0,d,mf_use);
