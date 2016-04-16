@@ -1,4 +1,4 @@
-function output = integrationrebalMF_clock_for_sens_func(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use)
+function [output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use)
 
 %specify Col accession for phenology model threshold
 flowering_thresh_geno = 2;
