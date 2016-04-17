@@ -38,6 +38,7 @@ else
 
 end
 
+%Overwrite photoperiod response parameters
 Phot_a = 1;
 Phot_b = -0.3937;
 Phot_c = 2.8894;

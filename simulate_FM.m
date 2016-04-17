@@ -1,4 +1,4 @@
-function [output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use)
+function [output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model)
 
 %specify Col accession for phenology model threshold
 flowering_thresh_geno = 2;
@@ -87,9 +87,13 @@ starch_module_state = [1,1,1,1];
 FT_module_state =ones(1,18);
 
 % set whether the phenology model controls the end of the simulation
-N_max_days = 75; %days max simulation
+N_max_days = 40; %default number of days max simulation
+if run_phenology_model
+    %upper ceiling on the number of days max simulation, if the phenology model is being run
+    N_max_days = 90;
+end
 input_size = N_max_days*24;
-run_phenology_model = 1;
+
 
 day_idx = 1;
 has_flowered = false;
@@ -370,7 +374,7 @@ sim_data.S_intercept = S_intercept;
 sim_data.totgrowth = sum(Normalisedgrowth(eme+25:end));
 sim_data.totcost = sum(Normalisedcost(eme+25:end));
 sim_data.minratio = sim_data.totcost/sim_data.totgrowth;
-sim_data.final_leaf_no = Leaf_no(end);
+sim_data.final_leaf_no = Leaf_no(end)
 sim_data.final_S_intercept = S_intercept(end);
 sim_data.final_root_mass = Root_mass(end);
 
