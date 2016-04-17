@@ -1,4 +1,6 @@
-function [dailyFTarea,FT_module_state] = simulate_PIF_CO_FT_model(sunrise,sunset,clock_output,clock_genotype,FT_module_state)
+function [dailyFTarea,FT_module_state] = simulate_PIF_CO_FT_model(sunrise,sunset,clock_output,clock_parameters,FT_module_state)
+assert(length(sunrise)==1)
+assert(length(sunset)==1)
 
 temperature = 22; %default parameter settings - may only take values of 22 or 27
 flowering_genotype = {''}; %use to set e.g. CO or FKF1 mutants
@@ -13,10 +15,9 @@ c.photoperiod = sunset-sunrise;
 % addpath('P2011_model')
 % addpath('PIF_CO_FT_model')
 
-parameters.clock = load_P2011_parameters(clock_genotype);
 
 % Convert clock dynamics into input struct for PIF_CO_FT model
-u = wrap_P2011_model_dynamics(clock_output.T,clock_output.Y,parameters.clock);
+u = wrap_P2011_model_dynamics(clock_output.T,clock_output.Y,clock_parameters);
 
 % Load PIF_CO_FT parameters
 parameters.PIF_CO_FT = load_PIF_CO_FT_parameters(flowering_genotype,temperature);

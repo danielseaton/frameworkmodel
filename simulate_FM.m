@@ -87,9 +87,9 @@ starch_module_state = [1,1,1,1];
 FT_module_state =ones(1,18);
 
 % set whether the phenology model controls the end of the simulation
-N_max_days = 40; %days max simulation
-input_size = 40*24;
-run_phenology_model = 0;
+N_max_days = 75; %days max simulation
+input_size = N_max_days*24;
+run_phenology_model = 1;
 
 day_idx = 1;
 has_flowered = false;
@@ -107,7 +107,7 @@ while day_idx <= N_max_days && ~(has_flowered)
     
     %run phenology model
     if run_phenology_model
-        [DayPhenThrm,FT_module_state] = phen(T,sunrise,sunset,flowering_thresh_geno,clock_output,FT_module_state,p);
+        [DayPhenThrm,FT_module_state] = phen(T,sunrise(t),sunset(t),flowering_thresh_geno,clock_parameters,clock_output,FT_module_state,p);
     else
         DayPhenThrm = 0;
     end

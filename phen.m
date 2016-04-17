@@ -1,4 +1,4 @@
-function [DayPhenThrm,FT_module_state] = phen(hour,T,sunrise,sunset,geno,clock_genotype,clock_output,FT_module_state,p)
+function [DayPhenThrm,FT_module_state] = phen(T,sunrise,sunset,geno,clock_parameters,clock_output,FT_module_state,p)
 
 % Fixed parameters
 %_________________
@@ -47,7 +47,9 @@ Phot_n = 4;
 %__________________
 Thrm = zeros(24,1);
 
-[dailyFTarea,FT_module_state] = simulate_PIF_CO_FT_model(sunrise,sunset,clock_output,clock_genotype,FT_module_state);
+[dailyFTarea,FT_module_state] = simulate_PIF_CO_FT_model(sunrise,sunset,clock_output,clock_parameters,FT_module_state);
+
+hour = 1:24;
 
 for i = 1:24
 
