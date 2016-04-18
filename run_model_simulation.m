@@ -4,6 +4,9 @@ set = 12;
 co2 = 42;
 light = 145;
 
+
+set = 10;
+
 %Calling for meteorological data
 %_______________________________  
 
@@ -57,4 +60,4 @@ nSP = length(starch_parameters);
 
 run_phenology_model = 1;
 
-[output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p0,d,mf_use,run_phenology_model);
+[output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
