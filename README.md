@@ -1,4 +1,4 @@
 # frameworkmodel
 
-The function "integrationrebal_MF_clock_for_sens_func.m" runs the model.
-It is called in the script "run_sensitivity_analysis", which changes model parameters systematically.
+The function "simulate_FM.m" runs the model.
+It is called in the script "run_model_simulation", which also sets up model parameters.
