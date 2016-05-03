@@ -1,4 +1,4 @@
-function [output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model)
+function [output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model,fileID)
 
 %specify Col accession for phenology model threshold
 flowering_thresh_geno = 2;
@@ -125,6 +125,12 @@ while day_idx <= N_max_days && ~(has_flowered)
         Thrm(t)=max(0,(T(t)-Tb))/24; %in degree days   
         CumThrm(t) = sum(Thrm(1:t)); %cumulative thermal time
         
+        % These may be overwritten - if not then they are zero
+        Total_leaf_mass(t) = 0;
+        Root_mass(t)       = 0;
+        Starch_carbon(t)   = 0;
+        MF_carbon(t)       = 0;
+
         if ~(has_emerged)
             %Plant has not yet emerged
             %______________________________________________
@@ -357,11 +363,21 @@ while day_idx <= N_max_days && ~(has_flowered)
             Normalisedcost(t) = net_rate(t)/Total_plant(t-1);
 
         end
+
+        % Output data as used by the web app
+        if exist('fileID','var')
+            fprintf(fileID,'t:%d,rosette:%f,root:%f,starch:%f,mf:%f,temp:%f,co2:%f,light:%f\n', t, Total_leaf_mass(t), Root_mass(t), Starch_carbon(t), MF_carbon(t), T(t), CO2(t), PAR(t) );
+        end
     end
     
     
     %Update day index
     day_idx = day_idx+1;
+end
+
+% Output that the simulation has finished
+if exist('fileID','var')
+    fprintf(fileID, 'Finished\n');
 end
 
 %-------------------------------End-of-model-------------------------------
