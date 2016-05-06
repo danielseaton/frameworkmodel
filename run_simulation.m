@@ -1,4 +1,4 @@
-function [] = run_simulation(resultFileName,tempMin,tempMax,tempOn,tempOff,tempTwilight,co2Min,co2Max,co2On,co2Off,co2Twilight,lightMin,lightMax,lightOn,lightOff,lightTwilight)
+function [] = run_simulation(resultFileName,tempDay,tempNight,tempDayLength,tempTwilight,co2Day,co2Night,co2DayLength,co2Twilight,lightDay,lightNight,lightDayLength,lightTwilight)
 
   fileID = fopen(resultFileName,'w');
 
@@ -7,14 +7,14 @@ function [] = run_simulation(resultFileName,tempMin,tempMax,tempOn,tempOff,tempT
 
   hour=weather(:,1);
 
-  rise = lightOn;
-  set = lightOff;
+  rise = 1;
+  set = rise+lightDayLength;
 
-  T=issf(hour, tempMin, tempMax, tempOn, tempOff, tempTwilight);
+  T=issf(hour, tempDay, tempNight, tempDayLength, tempTwilight);
   sunrise=rise*weather(:,3);
   sunset=set*weather(:,4); 
-  CO2=issf(hour, co2Min, co2Max, co2On, co2Off, co2Twilight);
-  PAR=issf(hour, lightMin, lightMax, lightOn, lightOff, lightTwilight);
+  CO2=issf(hour, co2Day, co2Night, co2DayLength, co2Twilight);
+  PAR=issf(hour, lightDay, lightNight, lightDayLength, lightTwilight);
   Photoperiod = sunset(end) - sunrise(end);
 
   %Specifying the genotype for the clock and starch models
