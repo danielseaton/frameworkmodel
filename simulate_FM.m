@@ -366,7 +366,7 @@ while day_idx <= N_max_days && ~(has_flowered)
 
         % Output data as used by the web app
         if exist('fileID','var')
-            fprintf(fileID,'t:%d,rosette:%f,root:%f,starch:%f,mf:%f,temp:%f,co2:%f,light:%f\n', t, Total_leaf_mass(t), Root_mass(t), Starch_carbon(t), MF_carbon(t), T(t), CO2(t), PAR(t) );
+            fprintf(fileID,'t:%d,rosette:%f,rosette_fw:%f,root:%f,root_fw:%f,starch:%f,mf:%f,temp:%f,co2:%f,light:%f\n', t, Total_leaf_mass(t), Total_leaf_mass(t)/d, Root_mass(t), Root_mass(t)/d, Starch_carbon(t), MF_carbon(t), T(t), CO2(t), PAR(t) );
         end
     end
     
