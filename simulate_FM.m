@@ -39,8 +39,12 @@ ad_interc = p(70); %y-intercept for the adult rate of leaf appearance
 SLA_cot = p(71); %SLA for cotyledons (in m2/g dry mass) Fig. 3 Christophe et al (2008)
 SLA_exp = p(72); %curve shape for SLA against thermal time
 
-%%%This is parameterisation - parameters derived from other parameters but
-%%%not depending on conditions
+%Change SLA depending on photoperiod, such that SLA_cot takes a value of
+%0.88 in 18h photoperiods, or has the default value for photoperiods of 12h
+%or less.
+SLA_cot = SLA_cot*(1-(max(Photoperiod,12)-12)/6*0.12);
+
+
 %Expansion period for the root system
 %____________________________________
 
