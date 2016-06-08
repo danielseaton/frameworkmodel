@@ -26,19 +26,6 @@ function Func = P2011_dynamics(t,y,P,sunrise,sunset)
     cond.dawn=sunrise;
     cond.photoperiod = sunset-sunrise;
     L = light_conditions(t,cond);
-%     LightOffset = 0; %Shifts light function up or down.
-%     twilightPer = 0.05; %The duration of time between value of force in dark and value of force in light.
-%     LightAmp = 1; %The amplitude of the light wave.
-%     period = 24;
-% 
-%     t = mod(t,period);
-% 
-%     L = LightOffset + 0.5*LightAmp*(1 + tanh((period/twilightPer)*((t+sunrise)/period - ...
-%         floor(floor(t+sunrise)/period)))) - 0.5*LightAmp*(1 + ...
-%         tanh((period/twilightPer)*((t+sunrise)/period - floor(floor(t+sunrise)/period)) - ...
-%         (sunset-sunrise)/twilightPer)) + 0.5*LightAmp*(1 + ...
-%         tanh((period/twilightPer)*((t+sunrise)/period - floor(floor(t+sunrise)/period)) -...
-%         period/twilightPer));
     
     %ODEs
     % y(1)  LHY mRNA                   
