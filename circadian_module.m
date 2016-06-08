@@ -76,7 +76,7 @@ function Func = P2011_dynamics(t,y,P,sunrise,sunset)
     EGn=(p18*y(4)+p17*y(25)*Gn)/(m9*y(26)+m10*y(27)+p31);
     e34=p25*y(19)*y(25)/(p26*y(29)+p21+m36*y(26)+m37*y(27));
 
-    Func(1) = g1^a/(g1^a+(y(7)+y(17)+y(9)+y(11))^a)*(q1*L*y(2)+n1)-y(1)*(m1*L+m2*(1-L));
+    Func(1) = 1* (q1*L*y(2)+n1*g1^a/(g1^a+(y(7)+y(17)+y(9)+y(11))^a))-y(1)*(m1*L+m2*(1-L));
     Func(2) = p7*(1-L)*(1-y(2))-m11*y(2)*L;
     Func(3) = p12*L*y(12)*y(10)-p13*y(3)*(1-L)-m21*y(3);
     Func(4) = p17*y(24)*y(10)-m9*y(4)*y(30)-p18*y(4)+p31*EGn;
