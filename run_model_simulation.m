@@ -4,9 +4,6 @@ set = 12;
 co2 = 42;
 light = 145;
 
-
-set = 10;
-
 %Calling for meteorological data
 %_______________________________  
 
