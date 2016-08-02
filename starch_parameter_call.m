@@ -19,25 +19,9 @@ P = struct(...
     );
 
 for i = 1:length(starch_mutant)
-    if strcmp(starch_mutant{i},'SEX')
-        %P.kdstarch = 0.2*P.kdstarch;
-        P.kdS = 1*P.kdS;
-    end
-    
-    if strcmp(starch_mutant{i},'LSF1')
+    if strcmp(starch_mutant{i},'LSF1') || strcmp(starch_mutant{i},'lsf1')
         %P.kdstarch = 0.2*P.kdstarch;
         P.kdS = 10;
         P.kdT2 = P.kdT2*0.3;
-        
-    end
-    
-    if strcmp(starch_mutant{i},'H_L')
-        %high light
-        P.vstarch = 1.5*P.vstarch;
-    end
-    
-    if strcmp(starch_mutant{i},'L_L')
-        %low light
-        P.vstarch = 0.5*P.vstarch;
     end
 end
