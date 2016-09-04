@@ -26,7 +26,7 @@ Measured_hour = [0 12 24];
 
 run_phenology_model = 0;
 
-for experiment_genotype_index = [1,2,4]
+for experiment_genotype_index = [3,4]
 
     %Specifying the genotype for the clock and starch models
     switch experiment_genotype_index
