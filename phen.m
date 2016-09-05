@@ -40,9 +40,9 @@ end
 
 %Overwrite photoperiod response parameters
 Phot_a = 1;
-Phot_b = -0.3937;
-Phot_c = 2.8894;
-Phot_n = 4;
+Phot_b = -0.4016;
+Phot_c = 2.7479;
+Phot_n = 3;
 
 %Calculation begins
 %__________________
