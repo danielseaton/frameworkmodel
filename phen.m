@@ -1,4 +1,4 @@
-function [DayPhenThrm,FT_module_state] = phen(T,sunrise,sunset,geno,clock_parameters,clock_output,FT_module_state,p)
+function [DayPhenThrm,FT_module_state] = phen(T,t,sunrise,sunset,geno,clock_parameters,clock_output,FT_module_state,p)
 
 % Fixed parameters
 %_________________
@@ -70,11 +70,11 @@ for i = 1:24
 
 
     if      fraction_light(i)==0
-            Thrm(i)=Night*max(T(i)-Tb,0);
+            Thrm(i)=Night*max(T(t+i-1)-Tb,0);
     elseif  fraction_light(i)==1    
-            Thrm(i)=max(T(i)-Tb,0);
+            Thrm(i)=max(T(t+i-1)-Tb,0);
     else 
-            Thrm(i)=max(0,(T(i)-Tb)*fraction_light(i)) + Night*max(0,(T(i)-Tb)*(1-fraction_light(i)));
+            Thrm(i)=max(0,(T(t+i-1)-Tb)*fraction_light(i)) + Night*max(0,(T(t+i-1)-Tb)*(1-fraction_light(i)));
     end
 
 
@@ -107,9 +107,9 @@ for i = 1:24
     %_______________________________________
 
 
-    if	T(i)>=Tvmin && T(i)<=Tvmax
+    if	T(t+i-1)>=Tvmin && T(t+i-1)<=Tvmax
 
-        Ve(i)=exp(v)*(T(i)-Tvmin)^m*(Tvmax-T(i))^sigma*1;
+        Ve(i)=exp(v)*(T(t+i-1)-Tvmin)^m*(Tvmax-T(t+i-1))^sigma*1;
     else	
         Ve(i)=0;
     end
