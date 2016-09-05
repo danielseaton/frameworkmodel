@@ -26,7 +26,7 @@ Measured_hour = [0 12 24];
 
 run_phenology_model = 0;
 
-for experiment_genotype_index = [3,4]
+for experiment_genotype_index = [1,2,3,4]
 
     %Specifying the genotype for the clock and starch models
     switch experiment_genotype_index
@@ -101,7 +101,7 @@ for experiment_genotype_index = [3,4]
     
     Estimate_biomass = sim_data.Total_shoot(Measured_day*24)/d;
     cvRMSE = (sum((Estimate_biomass - Measured_biomass).^2)/numel(Measured_biomass))^0.5/...
-                    (mean(Measured_biomass));
+                    (mean(Measured_biomass))
 
     nRMSE = (sum((Estimate_biomass - Measured_biomass).^2)/numel(Measured_biomass))^0.5/...
                     (max(Measured_biomass) - min(Measured_biomass));
