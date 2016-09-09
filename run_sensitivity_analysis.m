@@ -62,7 +62,8 @@ nCP = length(clock_parameters);
 
 starch_parameters0 = starch_parameter_call(starch_genotype);
 starch_parameters = starch_parameters0;
-nSP = length(starch_parameters);
+starch_parameter_names = fieldnames(starch_parameters);
+nSP = length(starch_parameter_names);
 
 run_phenology_model = 0;
 
@@ -70,25 +71,39 @@ run_phenology_model = 0;
 
 nD = length(output_basal); %number of dimensions of output
 
-sens = zeros(nP+nCP,nD);
+sens = zeros(nP+nCP+nSP,nD);
 errors = [];
-for i = 1:nP
-    i
-    p = p0;
-    p(i) = p(i)*(1+deltaP);
-    try
-        [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
-        sens(i,:) = ((output-output_basal)/deltaP)./output;
-    catch
-        errors = [errors;i];
-    end
-end
+% for i = 1:nP
+%     i
+%     p = p0;
+%     p(i) = p(i)*(1+deltaP);
+%     try
+%         [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
+%         sens(i,:) = ((output-output_basal)/deltaP)./output;
+%     catch
+%         errors = [errors;i];
+%     end
+% end
+% 
+% p = p0;
+% for i = nP+1:nP+nCP
+%     i
+%     clock_parameters = clock_parameters0;
+%     clock_parameters(i-nP) = clock_parameters(i-nP)*(1+deltaP);
+%     try
+%         [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
+%         sens(i,:) = ((output-output_basal)/deltaP)./output;
+%     catch
+%         errors = [errors;i];
+%     end
+% end
 
 p = p0;
-for i = nP+1:nP+nCP
+clock_parameters = clock_parameters0;
+for i = nP+nCP+1:nP+nCP+nSP
     i
-    clock_parameters = clock_parameters0;
-    clock_parameters(i-nP) = clock_parameters(i-nP)*(1+deltaP);
+    starch_parameters = starch_parameters0;
+    starch_parameters.(starch_parameter_names{i-nP-nCP}) = starch_parameters.(starch_parameter_names{i-nP-nCP})*(1+deltaP);
     try
         [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
         sens(i,:) = ((output-output_basal)/deltaP)./output;
