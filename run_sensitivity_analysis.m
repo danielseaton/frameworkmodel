@@ -18,6 +18,7 @@ CO2=co2*weather(:,5); %CO2 partial pressure (Pa)
 PAR=light*weather(:,6); %total absorbed PAR per unit leaf area (micromol m-2 s-1)
 Photoperiod = sunset(end) - sunrise(end);
 
+output_filename = input(['Enter name for datafile output \n(e.g. sens_analysis_results_WT):'], 's');
 
 
 %Specifying the genotype for the clock and starch models
@@ -73,30 +74,30 @@ nD = length(output_basal); %number of dimensions of output
 
 sens = zeros(nP+nCP+nSP,nD);
 errors = [];
-% for i = 1:nP
-%     i
-%     p = p0;
-%     p(i) = p(i)*(1+deltaP);
-%     try
-%         [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
-%         sens(i,:) = ((output-output_basal)/deltaP)./output;
-%     catch
-%         errors = [errors;i];
-%     end
-% end
-% 
-% p = p0;
-% for i = nP+1:nP+nCP
-%     i
-%     clock_parameters = clock_parameters0;
-%     clock_parameters(i-nP) = clock_parameters(i-nP)*(1+deltaP);
-%     try
-%         [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
-%         sens(i,:) = ((output-output_basal)/deltaP)./output;
-%     catch
-%         errors = [errors;i];
-%     end
-% end
+for i = 1:nP
+    i
+    p = p0;
+    p(i) = p(i)*(1+deltaP);
+    try
+        [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
+        sens(i,:) = ((output-output_basal)/deltaP)./output;
+    catch
+        errors = [errors;i];
+    end
+end
+
+p = p0;
+for i = nP+1:nP+nCP
+    i
+    clock_parameters = clock_parameters0;
+    clock_parameters(i-nP) = clock_parameters(i-nP)*(1+deltaP);
+    try
+        [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
+        sens(i,:) = ((output-output_basal)/deltaP)./output;
+    catch
+        errors = [errors;i];
+    end
+end
 
 p = p0;
 clock_parameters = clock_parameters0;
@@ -112,4 +113,4 @@ for i = nP+nCP+1:nP+nCP+nSP
     end
 end
 
-% save('sens_analysis_results_p97_new','output_basal','temp','rise','set','co2','light','p0','clock_parameters0','clock_genotype','deltaP','errors','sens')
+save(output_filename,'output_basal','temp','rise','set','co2','light','p0','clock_parameters0','clock_genotype','deltaP','errors','sens')
