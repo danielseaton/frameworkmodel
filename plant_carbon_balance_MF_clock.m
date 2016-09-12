@@ -35,14 +35,10 @@ end
         
 [leaf_res,root_res] = mainres(Tleaf,leaf_c,root_c,suc_c,rosette_area,timestep,p);
 
-% DANIEL
-%Calculating starch degradation. Start by just connecting it in a trivial
-%way, reading out starch content and regulating X appropriately.
+%Calculating starch degradation.
+%___________________________________
+
 [new_starch_module_state,starch_consumption] = starch_module(hour_idx,starch_module_state,sta_c,leaf_c,is_light,clock_output,starch_parameters);
-
-%[starch_consumption] =
-%starch_module(t,clock_output,sta_c,leaf_c,is_light);
-
 
 
 
