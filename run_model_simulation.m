@@ -55,6 +55,8 @@ nCP = length(clock_parameters);
 
 starch_parameters = starch_parameter_call(starch_genotype);
 nSP = length(starch_parameters);
+% starch_parameters.turnover_override = true;
+% starch_parameters.turnover = 0.90;
 
 run_phenology_model = 0;
 
