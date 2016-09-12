@@ -38,8 +38,21 @@ end
 %Calculating starch degradation.
 %___________________________________
 
-[new_starch_module_state,starch_consumption] = starch_module(hour_idx,starch_module_state,sta_c,leaf_c,is_light,clock_output,starch_parameters);
-
+if starch_parameters.turnover_override
+    %Starch module doesn't control turnover
+    if is_light
+        starch_consumption = 0;
+    else
+        assert(starch_parameters.turnover<=1)
+        assert(starch_parameters.turnover>=0)
+        starch_consumption = (starch_parameters.turnover*sta_c_endday)/(24-daylength);
+    end
+    %no starch module dynamics to return
+    new_starch_module_state = starch_module_state;
+else
+    %Starch module controls turnover
+    [new_starch_module_state,starch_consumption] = starch_module(hour_idx,starch_module_state,sta_c,leaf_c,is_light,clock_output,starch_parameters);
+end
 
 
 %Calculating Assimilatory flux
