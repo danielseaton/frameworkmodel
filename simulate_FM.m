@@ -41,6 +41,7 @@ SLA_exp = p(72); %curve shape for SLA against thermal time
 juv_phyllochron = p(82); %30.3
 ad_phyllochron = p(83); %11.9
 photosynthetic_efficiency = p(84); %0.88
+starch_conversion_multiplier = p(60); %0.6
 
 %Change SLA depending on photoperiod, such that SLA_cot takes a value of
 %0.88 in 18h photoperiods, or has the default value for photoperiods of 12h

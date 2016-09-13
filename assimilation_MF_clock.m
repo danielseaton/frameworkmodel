@@ -5,13 +5,14 @@ function [suc_sta_base,suc_MF_base,sta_use,MF_use,suc_equi,al_suc,suc_c_disp,suc
 convert_to_gC = timestep*p(59)*10^(-6)*12; %conversion factor for umol/m2 leaf/sec to gC/m2 leaf/timestep
 
 %Baseline conversion coefficient (default p(60)=0.125)
-%sta_base = p(60); %Baseline starch conversion coefficient
+%sta_base = p(60); %Baseline starch conversion coefficient. This parameter
+%has now been repurposed (see below)
 
 %Baseline conversion coefficient based on TiMet's AGPase activity data
-sta_base = 0.6*(-0.0296*daylength + 0.7157);
+sta_base = p(60)*(-0.0296*daylength + 0.7157);
 
 %Malate and fumarate conversion coefficient based on Laurel and Hardy Jan
-MF_base = 0.2*0.6*(-0.0296*daylength + 0.7157);
+MF_base = 0.2*sta_base;
 %MF_base = sta_base*(-0.0051*daylength + 0.1278); %for WP12A
   
 %sta_convert_night = p(61); % DANIEL: this parameter is now unused
