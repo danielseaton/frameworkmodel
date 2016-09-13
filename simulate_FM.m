@@ -40,6 +40,7 @@ SLA_cot = p(71); %SLA for cotyledons (in m2/g dry mass) Fig. 3 Christophe et al 
 SLA_exp = p(72); %curve shape for SLA against thermal time
 juv_phyllochron = p(82); %30.3
 ad_phyllochron = p(83); %11.9
+photosynthetic_efficiency = p(84); %0.88
 
 %Change SLA depending on photoperiod, such that SLA_cot takes a value of
 %0.88 in 18h photoperiods, or has the default value for photoperiods of 12h
