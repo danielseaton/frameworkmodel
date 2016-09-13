@@ -38,6 +38,8 @@ ad_rate = p(69); %rate of leaf appearance at adult stage
 ad_interc = p(70); %y-intercept for the adult rate of leaf appearance
 SLA_cot = p(71); %SLA for cotyledons (in m2/g dry mass) Fig. 3 Christophe et al (2008)
 SLA_exp = p(72); %curve shape for SLA against thermal time
+juv_phyllochron = p(82); %30.3
+ad_phyllochron = p(83); %11.9
 
 %Change SLA depending on photoperiod, such that SLA_cot takes a value of
 %0.88 in 18h photoperiods, or has the default value for photoperiods of 12h
@@ -253,9 +255,9 @@ while day_idx <= N_max_days && ~(has_flowered)
 
 
             if CumThrm(t) < (juv_TT+TT0)
-               phyllochron = 30.3*probability;
+               phyllochron = juv_phyllochron*probability;
             else
-               phyllochron = 11.9*probability;
+               phyllochron = ad_phyllochron*probability;
             end
 
             %To determine current leaf number:
