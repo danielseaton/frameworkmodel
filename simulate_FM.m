@@ -396,6 +396,19 @@ output = [];
 
 try
     %Try to instantiate a complete output as far as possible
+    sim_data.metadata.hour = hour;
+    sim_data.metadata.sunrise = sunrise;
+    sim_data.metadata.sunset = sunset;
+    sim_data.metadata.CO2 = CO2;
+    sim_data.metadata.PAR = PAR;
+    sim_data.metadata.Photoperiod = Photoperiod;
+    sim_data.metadata.clock_parameters = clock_parameters;
+    sim_data.metadata.starch_parameters = starch_parameters;
+    sim_data.metadata.p = p;
+    sim_data.metadata.d = d;
+    sim_data.metadata.mf_use = mf_use;
+    sim_data.metadata.run_phenology_model = run_phenology_model;
+    
     sim_data.input_size = input_size;
 
     sim_data.S_intercept = S_intercept;
