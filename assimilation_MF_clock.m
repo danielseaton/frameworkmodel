@@ -11,14 +11,15 @@ convert_to_gC = timestep*p(59)*10^(-6)*12; %conversion factor for umol/m2 leaf/s
 %Baseline conversion coefficient based on TiMet's AGPase activity data
 sta_base = p(60)*(-0.0296*daylength + 0.7157);
 
+mf_syn_frac = p(85);
 %Malate and fumarate conversion coefficient based on Laurel and Hardy Jan
-MF_base = 0.2*sta_base;
-%MF_base = sta_base*(-0.0051*daylength + 0.1278); %for WP12A
+MF_base = mf_syn_frac*sta_base;
+% MF_base = sta_base*(-0.0051*daylength + 0.1278); %for WP12A
   
 %sta_convert_night = p(61); % DANIEL: this parameter is now unused
 %sta_convert_night = 0.89;
 MF_convert_night = mf_use;
-%MF_convert_night = -0.0325*daylength + 1.1033; %for WP12A
+% MF_convert_night = -0.0325*daylength + 1.1033; %for WP12A
 
 if      is_light == 1
     
