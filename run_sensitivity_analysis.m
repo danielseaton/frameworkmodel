@@ -87,7 +87,7 @@ p = p0;
 for i = 2+nP+1:2+nP+nCP
     i
     clock_parameters = clock_parameters0;
-    clock_parameters(i-nP-2) = clock_parameters(i-nP-2)*(1-deltaP);
+    clock_parameters(i-nP-2) = clock_parameters(i-nP-2)*(1+deltaP);
     try
         [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
         sens(i,:) = ((output-output_basal)/deltaP)./output_basal;
