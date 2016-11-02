@@ -21,28 +21,10 @@ Photoperiod = sunset(end) - sunrise(end);
 output_filename = input(['Enter name for datafile output \n(e.g. sens_analysis_results_WT):'], 's');
 
 
-%Specifying the genotype for the clock and starch models
-experiment_genotype_index = 1;
-switch experiment_genotype_index
-    case 1
-        w = 0.91; %water content
-        mf_use = 0.7; %malate+fumarate turnover
-    case 2
-        w = 0.89; %water content
-        mf_use = 0.7; %malate+fumarate turnover
-    case 3
-        w = 0.89; %water content
-        mf_use = 0.7; %malate+fumarate turnover
-    case 4
-        w = 0.89; %water content
-        mf_use = 0.25; %malate+fumarate turnover
-end
-
-% w = 0.9;
+%WT water content and MF
+w = 0.91; %water content
+mf_use = 0.7; %malate+fumarate turnover
 d = 1-w; %dry matter
-
-
-
 
 load('parameter.mat')
 
@@ -72,28 +54,43 @@ run_phenology_model = 0;
 
 nD = length(output_basal); %number of dimensions of output
 
-sens = zeros(nP+nCP+nSP,nD);
+%Add two additional parameters for water content and mf_use
+
+sens = zeros(2+nP+nCP+nSP,nD);
 errors = [];
-for i = 1:nP
+
+p = p0;
+%water content
+w_perturbed = w*(1+deltaP);
+d_perturbed = 1-w_perturbed;
+[output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d_perturbed,mf_use,run_phenology_model);
+sens(1,:) = ((output-output_basal)/deltaP)./output_basal;
+
+mf_use_perturbed = mf_use*(1+deltaP);
+[output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use_perturbed,run_phenology_model);
+sens(2,:) = ((output-output_basal)/deltaP)./output_basal;
+
+
+for i = 3:nP+2
     i
     p = p0;
-    p(i) = p(i)*(1+deltaP);
+    p(i-2) = p(i-2)*(1+deltaP);
     try
         [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
-        sens(i,:) = ((output-output_basal)/deltaP)./output;
+        sens(i,:) = ((output-output_basal)/deltaP)./output_basal;
     catch
         errors = [errors;i];
     end
 end
 
 p = p0;
-for i = nP+1:nP+nCP
+for i = 2+nP+1:2+nP+nCP
     i
     clock_parameters = clock_parameters0;
-    clock_parameters(i-nP) = clock_parameters(i-nP)*(1+deltaP);
+    clock_parameters(i-nP-2) = clock_parameters(i-nP-2)*(1-deltaP);
     try
         [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
-        sens(i,:) = ((output-output_basal)/deltaP)./output;
+        sens(i,:) = ((output-output_basal)/deltaP)./output_basal;
     catch
         errors = [errors;i];
     end
@@ -101,13 +98,13 @@ end
 
 p = p0;
 clock_parameters = clock_parameters0;
-for i = nP+nCP+1:nP+nCP+nSP
+for i = 2+nP+nCP+1:2+nP+nCP+nSP
     i
     starch_parameters = starch_parameters0;
-    starch_parameters.(starch_parameter_names{i-nP-nCP}) = starch_parameters.(starch_parameter_names{i-nP-nCP})*(1+deltaP);
+    starch_parameters.(starch_parameter_names{i-nP-nCP-2}) = starch_parameters.(starch_parameter_names{i-nP-nCP-2})*(1+deltaP);
     try
         [output,~] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);
-        sens(i,:) = ((output-output_basal)/deltaP)./output;
+        sens(i,:) = ((output-output_basal)/deltaP)./output_basal;
     catch
         errors = [errors;i];
     end
