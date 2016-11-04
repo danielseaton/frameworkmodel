@@ -92,7 +92,6 @@ jv_values = [2.1,2.1,2.1,1.7,1.4,1.2];
 %range 4-18hrs)
 jv = interp1(daylengths,jv_values,daylength);     
 
-%jm25_pot = p(53)*vlmax25; %Potential rate of electron transport per unit leaf area at 25 (micromol m-2 s-1)
 jm25_pot = jv*vlmax25;
 
 jm_pot = jm25_pot*term1*term2/term3; %Potential rate of electron transport oer unit leaf area (micromol m-2 s-1)
