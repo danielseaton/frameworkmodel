@@ -1,4 +1,4 @@
-function [] = run_simulation(resultFileName,tempDay,tempNight,tempDayLength,tempTwilight,co2Day,co2Night,co2DayLength,co2Twilight,lightDay,lightNight,lightDayLength,lightTwilight)
+function [] = run_simulation(resultFileName,tempDay,tempNight,tempDayLength,tempTwilight,co2Day,co2Night,co2DayLength,co2Twilight,lightDay,lightNight,lightDayLength,lightTwilight,genotype)
 
   fileID = fopen(resultFileName,'w');
 
@@ -19,21 +19,14 @@ function [] = run_simulation(resultFileName,tempDay,tempNight,tempDayLength,temp
 
   %Specifying the genotype for the clock and starch models
 
-  experiment_genotype_index = 1;
-
-  switch experiment_genotype_index
-    case 1
-        w = 0.91; %water content
-        mf_use = 0.7; %malate+fumarate turnover
-    case 2
-        w = 0.89; %water content
-        mf_use = 0.7; %malate+fumarate turnover
-    case 3
-        w = 0.89; %water content
-        mf_use = 0.7; %malate+fumarate turnover
-    case 4
-        w = 0.89; %water content
-        mf_use = 0.25; %malate+fumarate turnover
+  if strcmp(genotype,'WT')
+    w = 0.91; %water content
+    mf_use = 0.7; %malate+fumarate turnover
+    clock_genotype = {''};
+  else  % assume prr7prr9 double mutant
+    w = 0.89; %water content
+    mf_use = 0.25; %malate+fumarate turnover
+    clock_genotype = {'prr9','prr7'};
   end
 
   d = 1-w; %dry matter
