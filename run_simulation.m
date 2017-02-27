@@ -33,7 +33,6 @@ function [] = run_simulation(resultFileName,tempDay,tempNight,tempDayLength,temp
 
   load('parameter.mat')
 
-  clock_genotype = {''};
   % Could specify mutants here, e.g.: clock_genotype = {'prr9','prr7'};
   clock_parameters = P2011_parameter_call(clock_genotype);
 
