@@ -1,5 +1,43 @@
 function [rlc_pt1,rrc_pt1,leaf_res,root_res,rgtot,rmtot,totalC,Assim] = ...
     ini_carbon_balance_MF(Tleaf,CO2,PAR,sunrise,sunset,rsratio,rosette_area,leaf_c,root_c,suc_c,sta_c,MF_c,timestep,growth_capacity,p,mf_use)
+%ini_carbon_balance - Performs the carbon balance for the plant at the first timepoint after emergence.
+%
+% Syntax:  [rlc_pt1,rrc_pt1,leaf_res,root_res,rgtot,rmtot,totalC,Assim] = ...
+%    ini_carbon_balance_MF(Tleaf,CO2,PAR,sunrise,sunset,rsratio,rosette_area,leaf_c,root_c,suc_c,sta_c,MF_c,timestep,growth_capacity,p,mf_use)
+%
+% Inputs:
+%    Tleaf - Leaf temperature (degrees Centigrade)
+%    CO2 - CO2 partial pressure (Pa)
+%    PAR - Total absorbed photosynthetically active radiation per unit leaf area (micromol m-2 s-1)
+%    sunrise - Time of sunrise (h)
+%    sunset - Time of sunset (h)
+%    rsratio - Ratio of root to shoot growth rate (dimensionless)
+%    rosette_area - Rosette area (m2/plant)
+%    leaf_c - Leaf carbon (gC/plant)
+%    root_c - Root carbon (gC/plant)
+%    suc_c    
+%    sta_c
+%    MF_c
+%    timestep
+%    growth_capacity
+%    p - Vector of parameters
+%    mf_use - Fraction of malate and fumarate used across the night
+%
+% Outputs:
+%    rlc_pt1 - Leaf growth respiration gC/plant/timestep
+%    rrc_pt1 - Root growth respiration gC/plant/timestep
+%    leaf_res - Leaf maintenance respiration gC/plant/timestep
+%    root_res - Root maintenance respiration gC/plant/timestep
+%    rgtot - Total root growth respiration gC/plant/timestep
+%    rmtot - Total root maintenance respiration gC/plant/timestep
+%    totalC - Total carbon (g/plant)
+%    Assim - Assimilatory flux per plant (gC/plant/timestep)
+%
+% Other m-files required: none
+% Subfunctions: none
+%
+% See also: OTHER_FUNCTION_NAME1,  OTHER_FUNCTION_NAME2
+
 
 %Initial values
 %______________
