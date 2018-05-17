@@ -15,11 +15,11 @@ function [rlc_pt1,rrc_pt1,leaf_res,root_res,rgtot,rmtot,totalC,Assim] = ...
 %    rosette_area - Rosette area (m2/plant)
 %    leaf_c - Leaf carbon (gC/plant)
 %    root_c - Root carbon (gC/plant)
-%    suc_c    
-%    sta_c
-%    MF_c
-%    timestep
-%    growth_capacity
+%    suc_c - Sucrose carbon   
+%    sta_c - Starch carbon
+%    MF_c - Malate/Fumarate carbon
+%    timestep - 1 h by model-wide, hard-wired default
+%    growth_capacity - maximum growth
 %    p - Vector of parameters
 %    mf_use - Fraction of malate and fumarate used across the night
 %
@@ -33,11 +33,10 @@ function [rlc_pt1,rrc_pt1,leaf_res,root_res,rgtot,rmtot,totalC,Assim] = ...
 %    totalC - Total carbon (g/plant)
 %    Assim - Assimilatory flux per plant (gC/plant/timestep)
 %
-% Other m-files required: none
-% Subfunctions: none
+% Functions called:
+%    photosynthesis, mainres, assimilation_MF_clock,
+%    organdemand, allocation, translocation
 %
-% See also: OTHER_FUNCTION_NAME1,  OTHER_FUNCTION_NAME2
-
 
 %Initial values
 %______________

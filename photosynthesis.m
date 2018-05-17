@@ -1,9 +1,23 @@
 function [net_rate] = photosynthesis(CO2,Tleaf,PAR,vlmax25,daylength,p)
+%Calculate rate of photosynthesis limited by Rubisco
+%
+% Inputs:
+%    CO2 - CO2 partial pressure (Pa)
+%    Tleaf - Leaf temperature (degrees Centigrade)
+%    PAR - Total absorbed photosynthetically active radiation per unit leaf area (micromol m-2 s-1)
+%    vlmax25 - Initial photosynthetic rubisco capacity per unit leaf area at 25degC (micromol CO2 m-2 s-1)
+%    daylength = sunset - sunrise, in h
+%    p - Vector of parameters
+%
+% Outputs:
+%    net_rate - Net rate of leaf photosynthesis (micromol CO2 m-2 leaf s-1)
+%
+% Functions called:
+%    none
 
 %Rasse and Tocquin, 2006
 
-%Calculate rate of photosynthesis limited by Rubisco
-%___________________________________________________
+
 %___________________________________________________
 
 
