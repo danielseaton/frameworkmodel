@@ -1,4 +1,20 @@
 function [leaf_res,root_res] = mainres(Tleaf,leaf_c,root_c,suc_c_perplant,rosette_area,timestep,p)
+%% calculates rate of maintenance respiration
+%
+% Inputs:
+%    Tleaf - Leaf temperature (degrees Centigrade)
+%    leaf_c - Leaf carbon (gC/plant)
+%    root_c - Root carbon (gC/plant)
+%    suc_c - Sucrose carbon
+%    rosette_area - Rosette area (m2/plant)
+%    timestep - 1 h by model-wide, hard-wired default
+%    p - Vector of parameters
+%
+% Outputs:
+%    leaf res - leaf respiration per plant per time step (gC per plant per
+%    time step)
+%    root_res - root respiration per plant per time step (gC per plant per
+%    time step
 
 %Calculation for maintenance respiration
 %_______________________________________
