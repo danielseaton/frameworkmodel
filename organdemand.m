@@ -1,4 +1,25 @@
 function [rrc_pt,totdem,rlc_pt,root_growth,leaf_growth] = organdemand(timestep,rsratio,leaf_c,growth_capacity,p)
+%% calculates partitioning of growth carbon to roots, leaves, and respiration
+% Inputs:
+%    timestep - 1 h by model-wide, hard-wired default
+%    rsratio - Ratio of root to shoot growth rate (dimensionless)
+%    leaf_c - Leaf carbon (gC/plant)
+%    growth_capacity - maximum growth
+%    p - Vector of parameters
+%
+% Outputs:
+%    rrc_pt - Root growth respiration In g C/plant/timestep
+%    totdem - sum of all growth demand, including respiration
+%    rlc_pt - Leaf growth respiration In g C/plant/timestep (required)
+%    root_growth - Root growth in gC/plant/timestep
+%    leaf_growth - Leaf growth in gC/plant/timestep
+%
+% Functions called:
+%    none
+
+
+
+%%
 
 %Leaf growth
 %___________
