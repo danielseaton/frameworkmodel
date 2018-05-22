@@ -15,6 +15,9 @@ function [leaf_res,root_res] = mainres(Tleaf,leaf_c,root_c,suc_c_perplant,rosett
 %    time step)
 %    root_res - root respiration per plant per time step (gC per plant per
 %    time step
+%
+%  Functions called:
+%    -
 
 %Calculation for maintenance respiration
 %_______________________________________
