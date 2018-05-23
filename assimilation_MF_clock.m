@@ -1,6 +1,41 @@
 function [suc_sta_base,suc_MF_base,sta_use,MF_use,suc_equi,al_suc,suc_c_disp,suc_c_interm,al_pt_plant_assim]...
     = assimilation_MF_clock(daylength,is_light,net_rate,timestep,leaf_res,...
     root_res,suc_c_perplant,rosette_area,sta_c_endday,MF_c_endday,leaf_c,starch_consumption,p,mf_use)
+%% rates of assimilation and carbon partitioning between starch and sucrose
+%
+% Inputs:
+%   daylength - Duration of daylight
+%   is_light - Whether lights are on or off in the current timestep
+%   net_rate - net_rate - Net rate of leaf photosynthesis (micromol CO2 m-2 leaf s-1)
+%   timestep - 1 h by model-wide, hard-wired default
+%   leaf res - leaf respiration per plant per time step (gC per plant per
+%   time step)
+%   root_res - root respiration per plant per time step (gC per plant per
+%   time step
+%   suc_c_perplant - Sucrose carbon (gC/plant)
+%   rosette_area - Rosette area (m2/plant)
+%   sta_c_endday - Starch carbon at the end of the previous day
+%   MF_c_endday - MF carbon at the end of the previous day
+%   leaf_c - Leaf carbon (gC/plant)
+%   starch_consumption - Rate of starch consumption (gC/plant/timestep)
+%   p - Vector of parameters
+%   mf_use - Fraction of malate and fumarate used across the night
+%
+% Outputs:
+%   suc_sta_base - baseline starch conversion
+%   suc_MF_base - baseline malate+fumarate conversion
+%   sta_use - conversion of starch to sugar
+%   MF_use - conversion of malate+fumarate to sugar
+%   suc_equi - equilibrium sucrose plus hexose concentration in leaves (g C/m2 leaf)
+%   al_suc - allocation remaining for sucrose after accounting for
+%   conversion to starch and m+f
+%   suc_c_disp - Amount of sugar available for growth
+%   suc_c_interm - Intermediate sucrose carbon calculation
+%   al_pt_plant_assim - Assimilatory flux per plant (gC/plant/timestep)
+%
+% Called functions:
+%   -
+
 
 convert_to_gC = timestep*p(59)*10^(-6)*12; %conversion factor for umol/m2 leaf/sec to gC/m2 leaf/timestep
 
