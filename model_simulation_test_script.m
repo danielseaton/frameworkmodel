@@ -1,3 +1,5 @@
+%% interactive script to run the model for different cases
+
 temp = 20.5;
 rise = 0;
 set = 12;
