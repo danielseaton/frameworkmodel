@@ -1,4 +1,14 @@
 function [clock_output] = circadian_module(sunrise,sunset,clock_state_0,P)
+%% ODE model of the circadian clock, from Pokhilko et al, 2011
+%
+% Inputs:
+%   sunrise
+%   sunset
+%   clock_state_0 - vector of molecular clock state at start of the day (t=0, relative to when sunrise and sunset occur)
+%   P - vector of clock parameters (reaction rates, binding constants, etc. - not to be confused with parameters used for overall FM)
+%
+% Output:
+%   clock_output - vector of molecular clock state at the end of the day
 
 Tout = [0:0.05:27];
 % Run model for 27 hours:
