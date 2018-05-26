@@ -8,4 +8,4 @@ period environment data to be used.
  
  
  
-![My image](danielseaton.github.com/frameworkmodel/img/framework_model_code_schematic.png)
+![My image](img/framework_model_code_schematic.png)
