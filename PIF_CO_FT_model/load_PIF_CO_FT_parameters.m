@@ -1,4 +1,12 @@
 function P = load_PIF_CO_FT_parameters(genotype,temperature)
+%% returns a vector of parameter values for a given genotype (e.g. {"pif4", "pif5"} is the pif4pif5 double knockout)
+% 
+% Input:
+%   genotype - structure of character strings specifying knockout/overexpression genes
+%   temperature - either 22 or 27 (different EC parameters at the two temperatures)
+%
+% Output:
+%   P - vector of Parameters
 
 if nargin >2
     error('Too many input parameters to load_PIF_CO_FT_parameters')

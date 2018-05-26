@@ -1,4 +1,11 @@
 function P = load_P2011_parameters(genotype)
+%% returns a vector of parameter values for a given genotype (e.g. {"prr7","prr9"} is the prr9prr7 knockout)
+% 
+% Input:
+%   genotype - structure of character strings specifying knockout/overexpression genes
+%
+% Output:
+%   P - vector of Parameters
 
 if nargin == 0
     genotype = {''};
