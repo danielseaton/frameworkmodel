@@ -5,4 +5,8 @@ It is called in the script "run_model_simulation", which also sets up model para
 
 The Web Application used the run_simulation.m version to run the model. This allows
 period environment data to be used.
- 
+
+
+## Overview of module/function heirarchy
+
+![My image](img/framework_model_code_schematic.png)
