@@ -1,4 +1,20 @@
 function [DayPhenThrm,FT_module_state] = phen(T,t,sunrise,sunset,geno,clock_parameters,clock_output,FT_module_state,p)
+%% phenology model to determine flowering time
+% Inputs:
+%   T - Temperature (celcius)
+%   t - time (hours)
+%   sunrise - sunrise (hours)
+%   sunset - sunset (hours)
+%   geno - genotype index
+%   clock_parameters - vector of clock parameters
+%   clock_output - output timeseries for the clock model (concentrations of model components over time)
+%   FT_module_state - state vector of the FT model (concentrations of model components at initial timepoint)
+%   p - parameter vector
+%
+% Outputs:
+%   DayPhenThrm - Accumulated modified thermal time units
+%   FT_module_state - state vector of the FT model at the end of the timestep
+
 
 % Fixed parameters
 %_________________
