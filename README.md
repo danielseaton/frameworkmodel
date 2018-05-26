@@ -1,5 +1,7 @@
 # frameworkmodel
 
+This repository contains code to simulate the Arabidopsis Framework model v2, described in Chew et al, 2017 [https://doi.org/10.1101/105437].
+
 The function "simulate_FM.m" runs the model.
 It is called in the script "run_model_simulation", which also sets up model parameters.
 
