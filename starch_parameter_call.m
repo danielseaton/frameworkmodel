@@ -1,4 +1,11 @@
 function P = starch_parameter_call(starch_mutant)
+%% loads the parameters for the starch model, according to the specified genotype
+%
+% Input:
+%   starch_mutant - a structure containing strings specifying the genotype (e.g. {'lsf1'} for the lsf1 mutant)
+%
+% Output:
+%   P - a structure of named parameters for the starch model
 
 P = struct(...
     'ksY', 1, ...
