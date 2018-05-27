@@ -1,4 +1,17 @@
 function [leaf_trans,root_trans] = translocation(rosette_area,suc_c_interm,suc_equi,leaf_c,root_c)
+%% transolcation of sugar between compartments if sucrose falls below equilibrium values
+%
+% Input:
+%   rosette_area - Total leaf area of the rosette
+%   suc_c_interm - Intermediate sucrose value
+%   suc_equi - equilibrium sucrose plus hexose concentration in leaves (g C/m2 leaf)
+%   leaf_c - Leaf carbon (gC/plant)
+%   root_c - Root carbon (gC/plant)
+%
+% Output:
+%   leaf_trans - Translocation from leaves (gC/plant)
+%   root_trans - Translocation from roots (gC/plant)
+
 
 global p
 
