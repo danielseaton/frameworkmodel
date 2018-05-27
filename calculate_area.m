@@ -1,6 +1,20 @@
 function [S_intercept,Func_area] = calculate_area(t,S,petiole,input_size,Appear,Leaf_no,Sf,S_intercept,Func_area)
+%% calculate area at a previous time point
+%
+% Input:
+%   t - current time
+%   S - leaf areas over time - n_timesteps x n_leaves
+%   petiole - petiole factor determining crowding
+%   input_size - number of timesteps of simulation
+%   Appear - time of appearance of each leaf
+%   Leaf_no - number of leaves over time
+%   Sf - functioning leaf area over time - n_timesteps x n_leaves
+%   Func_area - total functional leaf area over time
+%
+% Output:
+%   S_intercept - total leaf area intercepting light
+%   Func_area - total functional leaf area over time, updated within this function
 
-%FUNC: calculate area a previous time point
 if  Leaf_no(t-1) <= 15
 
     S_intercept(t-1) = sum(S(t-1,1:Leaf_no(t-1))); %Projected rosette area
