@@ -1,5 +1,13 @@
 function P = P2011_parameter_call(mutant)
-% this function returns parameters for P2011 according to the desired
+%% returns a vector of parameter values for a given genotype (e.g. {"prr7","prr9"} is the prr9prr7 knockout)
+%
+% Input:
+%   genotype - structure of character strings specifying knockout/overexpression genes
+%
+% Output:
+%   P - vector of Parameters
+
+  % this function returns parameters for P2011 according to the desired
 % mutant.
 
 % "mutant" is a cell with entries for each gene desired to be knocked out
