@@ -1,4 +1,17 @@
 function [new_starch_module_state,starch_consumption] = starch_module(time,starch_module_state,sta_c,leaf_c,is_light,clock_output,starch_parameters)
+% Input:
+%   time - current timepoint
+%   starch_module_state - initial state vector of the starch module in this timestep
+%   sta_c - starch carbon
+%   leaf_c - leaf carbon (used to normalise starch content to plant size)
+%   is_light - boolean, presence or absence of light in this timestep
+%   clock_output - dynamic vector of the circadian clock model, which provides input to the starch model
+%   starch_parameters - model parameters for the starch model dynamics (kinetic parameters, binding constants, etc.)
+%
+% Output:
+%   new_starch_module_state - state vector of the starch module at the end of this timestep
+%   starch_consumption - the quantity of starch consumed in this timestep
+
 
 % Note: Dynamics (dydt) are directly manipulated to convert units from per
 % hour (this model) to per day (framework model).
