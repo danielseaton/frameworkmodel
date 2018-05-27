@@ -1,4 +1,26 @@
 function [output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model,fileID)
+%% simulate the Framework Model v2. This function is the core function,
+%
+% Input:
+%   hour - vector of timesteps
+%   T - vector of temperatures over timesteps given by hour
+%   sunrise - daily time of sunrise (integer, in hours)
+%   sunset - daily time of sunset (integer, in hours)
+%   CO2 - CO2 concentration
+%   PAR - incident photosynthetically active radiation
+%   Photoperiod - Obsolete parameter, kept in input for backwards compatibility
+%   clock_parameters - vector of P2011 circadian clock model parameters
+%   starch_parameters - structure of starch model parameters
+%   p - vector of Framework Model parameters (beyond those used for the clock and starch models)
+%   d - dry weight proportion
+%   mf_use - fraction of malate and fumarate turned over during the night
+%   run_phenology_model - boolean variable determining whether to run the phenology model
+%   fileID - file to write output data to
+%
+% Output:
+%   output - subset of output data - fresh weight, assimilation, respiration, and starch content on day 38
+%   sim_data - structure containing nested files with complete simulation data
+
 
 %specify Col accession for phenology model threshold
 flowering_thresh_geno = 2;
@@ -401,7 +423,7 @@ try
     sim_data.metadata.sunset = sunset;
     sim_data.metadata.CO2 = CO2;
     sim_data.metadata.PAR = PAR;
-    sim_data.metadata.Photoperiod = Photoperiod;
+    sim_data.metadata.Photoperiod = sunset - sunrise;
     sim_data.metadata.clock_parameters = clock_parameters;
     sim_data.metadata.starch_parameters = starch_parameters;
     sim_data.metadata.p = p;
@@ -432,11 +454,11 @@ try
     sim_data.sucrose_perFW = sim_data.sucrose./(Total_shoot/d); %g C/g FW
 
 
-    sim_data.FW_ED = Total_shoot(input_size+Photoperiod-24)/d; %g
-    sim_data.FW_EN = Total_shoot(input_size)/d; %g
-    sim_data.AD = sim_data.Gas_exchange_perFW(input_size+2-24); %g C/g FW/h
-    sim_data.AR1 = sim_data.Gas_exchange_perFW(input_size-24+Photoperiod+5); %g C/g FW/h
-    sim_data.AR2 = sim_data.Gas_exchange_perFW(input_size-1); %g C/g FW/h
+    sim_data.FW_ED = Total_shoot(input_size+sunset-24)/d; %g
+    sim_data.FW_EN = Total_shoot(input_size+sunrise-24)/d; %g
+    sim_data.AD = sim_data.Gas_exchange_perFW(input_size+sunrise+2-24); %g C/g FW/h
+    sim_data.AR1 = sim_data.Gas_exchange_perFW(input_size-24+sunset+5); %g C/g FW/h
+    sim_data.AR2 = sim_data.Gas_exchange_perFW(input_size-24+sunrise-1); %g C/g FW/h
 
 
     sim_data.FW = Total_shoot/d;
