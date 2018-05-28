@@ -14,7 +14,6 @@ function [leaf_trans,root_trans] = translocation(rosette_area,suc_c_interm,suc_e
 
 
 suc_equi_plant = suc_equi*rosette_area; %Equilibrium sucrose plus hexose mass for whole plant (g C/plant)
-%suc_equi_plant = suc_equi*leaf_c/p(30); %Equilibrium sucrose plus hexose mass for whole plant (g C/plant)
 root_and_leaf_c = root_c + leaf_c; %Total root and leaf C (g C/plant)
 
 if      suc_c_interm <= suc_equi_plant %translocation needed
