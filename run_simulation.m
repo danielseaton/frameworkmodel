@@ -1,4 +1,14 @@
 function [] = run_simulation(resultFileName,tempDay,tempNight,tempDayLength,tempTwilight,co2Day,co2Night,co2DayLength,co2Twilight,lightDay,lightNight,lightDayLength,lightTwilight,genotype)
+%% wrapper function to simulate the model
+%
+% Input:
+%   resultFileName - file path to write results to
+%   [temp,co2,light]Day - daytime [temp,co2,light]
+%   [temp,co2,light]Night - nighttime [temp,co2,light]
+%   [temp,co2,light]DayLength - duration of day [temp,co2,light]
+%   [temp,co2,light]Twilight - duration of transition between day and night [temp,co2,light]
+%   genotype - genotype to be simulated ('WT' for wildtype, else prr7prr9 is assumed)
+%
 
   fileID = fopen(resultFileName,'w');
 
