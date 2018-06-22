@@ -12,3 +12,8 @@ period environment data to be used.
 ## Overview of module/function heirarchy
 
 ![My image](img/framework_model_code_schematic.png)
+
+
+## License
+
+This software is licensed under the Apache 2.0 license (see LICENSE.txt).
